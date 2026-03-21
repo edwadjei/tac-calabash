@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAC Calabash - UI Mockups</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            brand: { 50:'#eef2ff',100:'#e0e7ff',200:'#c7d2fe',300:'#a5b4fc',400:'#818cf8',500:'#6366f1',600:'#4f46e5',700:'#4338ca',800:'#3730a3',900:'#312e81' },
+            sidebar: { bg:'#1e293b', hover:'#334155', active:'#4f46e5' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .page { display: none !important; }
+    .page.active { display: block !important; }
+    #login-page.active { display: flex !important; }
+    #app-shell.visible { display: flex !important; }
+    .nav-item.active { background: #4f46e5; }
+    .nav-item:hover { background: #334155; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+<!-- LOGIN PAGE -->
+<div id="login-page" class="page active min-h-screen">
+  <div class="hidden lg:flex lg:w-1/2 bg-brand-600 items-center justify-center p-12">
+    <div class="text-white max-w-md">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+        </div>
+        <span class="text-2xl font-bold">TAC Calabash</span>
+      </div>
+      <h1 class="text-4xl font-bold mb-4">Church Management System</h1>
+      <p class="text-lg text-white/80 mb-8">Manage members, ministries, finances, and events — all in one place.</p>
+      <div class="space-y-4">
+        <div class="flex items-center gap-3"><div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-sm">✓</div><span>Member & family management</span></div>
+        <div class="flex items-center gap-3"><div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-sm">✓</div><span>Attendance & event tracking</span></div>
+        <div class="flex items-center gap-3"><div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-sm">✓</div><span>Financial reports & pledges</span></div>
+        <div class="flex items-center gap-3"><div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-sm">✓</div><span>Ministry coordination</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="flex-1 flex items-center justify-center p-8">
+    <div class="w-full max-w-md">
+      <div class="lg:hidden flex items-center gap-3 mb-8">
+        <div class="w-10 h-10 bg-brand-600 rounded-xl flex items-center justify-center">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+        </div>
+        <span class="text-xl font-bold text-brand-600">TAC Calabash</span>
+      </div>
+      <h2 class="text-2xl font-bold mb-1">Welcome back</h2>
+      <p class="text-gray-500 mb-8">Sign in to your account to continue</p>
+      <form onsubmit="event.preventDefault(); navigateTo('dashboard')">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+          <input type="email" value="admin@taccalabrash.org" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="you@example.com">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+          <input type="password" value="password123" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="••••••••">
+        </div>
+        <div class="flex justify-between items-center mb-6">
+          <label class="flex items-center gap-2 text-sm"><input type="checkbox" checked class="rounded border-gray-300 text-brand-600"> Remember me</label>
+          <a href="#" class="text-sm text-brand-600 hover:underline">Forgot password?</a>
+        </div>
+        <button type="submit" class="w-full bg-brand-600 text-white py-2.5 rounded-lg font-medium hover:bg-brand-700 transition">Sign in</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- APP SHELL (sidebar + topbar + content area) -->
+<div id="app-shell" class="page min-h-screen">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-sidebar-bg text-white flex flex-col fixed h-full z-10">
+    <div class="p-5 flex items-center gap-3 border-b border-white/10">
+      <div class="w-9 h-9 bg-brand-600 rounded-lg flex items-center justify-center">
+        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+      </div>
+      <div><div class="font-semibold text-sm">TAC Calabash</div><div class="text-xs text-gray-400">Church Admin</div></div>
+    </div>
+    <nav class="flex-1 p-3 space-y-1 overflow-y-auto">
+      <a onclick="navigateTo('dashboard')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium" data-page="dashboard">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg>
+        Dashboard
+      </a>
+      <a onclick="navigateTo('members')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium" data-page="members">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Members
+      </a>
+      <a onclick="navigateTo('ministries')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium" data-page="ministries">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        Ministries
+      </a>
+      <a onclick="navigateTo('attendance')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium" data-page="attendance">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+        Attendance
+      </a>
+      <a onclick="navigateTo('events')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium" data-page="events">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Events
+      </a>
+      <a onclick="navigateTo('finances')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium" data-page="finances">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Finances
+      </a>
+      <a onclick="navigateTo('followups')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium" data-page="followups">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Follow-ups
+      </a>
+      <a onclick="navigateTo('reports')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium" data-page="reports">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        Reports
+      </a>
+      <div class="pt-4 mt-4 border-t border-white/10">
+        <a onclick="navigateTo('announcements')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium" data-page="announcements">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>
+          Announcements
+        </a>
+        <a onclick="navigateTo('settings')" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium" data-page="settings">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          Settings
+        </a>
+      </div>
+    </nav>
+    <div class="p-4 border-t border-white/10">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-brand-500 rounded-full flex items-center justify-center text-sm font-semibold">EA</div>
+        <div class="flex-1 min-w-0"><div class="text-sm font-medium truncate">Elder Adjei</div><div class="text-xs text-gray-400">Super Admin</div></div>
+        <button onclick="navigateTo('login')" class="text-gray-400 hover:text-white"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg></button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content area -->
+  <div class="flex-1 ml-64">
+    <!-- Top bar -->
+    <header class="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between sticky top-0 z-[5]">
+      <div class="flex items-center gap-4">
+        <div class="relative">
+          <svg class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" placeholder="Search members, events..." class="pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm w-72 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button class="relative p-2 text-gray-400 hover:text-gray-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+        </button>
+        <div class="w-8 h-8 bg-brand-500 rounded-full flex items-center justify-center text-white text-xs font-semibold">EA</div>
+      </div>
+    </header>
+
+    <!-- DASHBOARD PAGE -->
+    <div id="page-dashboard" class="page p-6">
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold">Dashboard</h1>
+        <p class="text-gray-500 text-sm">Welcome back, Elder Adjei. Here's what's happening at TAC Calabash.</p>
+      </div>
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
+        <div class="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-sm text-gray-500">Total Members</span>
+            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center"><svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+          </div>
+          <div class="text-3xl font-bold">342</div>
+          <div class="text-xs text-green-600 mt-1">+12 this month</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-sm text-gray-500">Sunday Attendance</span>
+            <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center"><svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></div>
+          </div>
+          <div class="text-3xl font-bold">278</div>
+          <div class="text-xs text-green-600 mt-1">81% of members</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-sm text-gray-500">Monthly Tithes</span>
+            <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center"><svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          </div>
+          <div class="text-3xl font-bold">GH&#8373; 45,230</div>
+          <div class="text-xs text-green-600 mt-1">+8% vs last month</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-sm text-gray-500">Active Ministries</span>
+            <div class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center"><svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div>
+          </div>
+          <div class="text-3xl font-bold">7</div>
+          <div class="text-xs text-gray-500 mt-1">156 total participants</div>
+        </div>
+      </div>
+      <!-- Charts Row -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
+        <div class="lg:col-span-2 bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-semibold">Attendance Trend</h3>
+            <select class="text-sm border border-gray-200 rounded-lg px-3 py-1.5"><option>Last 6 months</option><option>Last 12 months</option></select>
+          </div>
+          <div class="h-56 flex items-end gap-3 px-2">
+            <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full bg-brand-100 rounded-t" style="height:65%"><div class="w-full bg-brand-500 rounded-t h-3/4"></div></div><span class="text-xs text-gray-500">Sep</span></div>
+            <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full bg-brand-100 rounded-t" style="height:72%"><div class="w-full bg-brand-500 rounded-t h-3/4"></div></div><span class="text-xs text-gray-500">Oct</span></div>
+            <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full bg-brand-100 rounded-t" style="height:60%"><div class="w-full bg-brand-500 rounded-t h-3/4"></div></div><span class="text-xs text-gray-500">Nov</span></div>
+            <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full bg-brand-100 rounded-t" style="height:80%"><div class="w-full bg-brand-500 rounded-t h-3/4"></div></div><span class="text-xs text-gray-500">Dec</span></div>
+            <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full bg-brand-100 rounded-t" style="height:75%"><div class="w-full bg-brand-500 rounded-t h-3/4"></div></div><span class="text-xs text-gray-500">Jan</span></div>
+            <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full bg-brand-100 rounded-t" style="height:85%"><div class="w-full bg-brand-500 rounded-t h-3/4"></div></div><span class="text-xs text-gray-500">Feb</span></div>
+          </div>
+          <div class="flex gap-6 mt-3 text-xs text-gray-500"><span class="flex items-center gap-1"><span class="w-3 h-3 bg-brand-500 rounded"></span> Sunday Service</span><span class="flex items-center gap-1"><span class="w-3 h-3 bg-brand-100 rounded"></span> Midweek</span></div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+          <h3 class="font-semibold mb-4">Upcoming Events</h3>
+          <div class="space-y-3">
+            <div class="flex gap-3 items-start"><div class="w-10 h-10 bg-red-50 rounded-lg flex flex-col items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-red-600">MAR</span><span class="text-sm font-bold text-red-600">9</span></div><div><div class="text-sm font-medium">Sunday Worship Service</div><div class="text-xs text-gray-500">9:00 AM - 12:00 PM</div></div></div>
+            <div class="flex gap-3 items-start"><div class="w-10 h-10 bg-blue-50 rounded-lg flex flex-col items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-blue-600">MAR</span><span class="text-sm font-bold text-blue-600">12</span></div><div><div class="text-sm font-medium">Midweek Bible Study</div><div class="text-xs text-gray-500">6:30 PM - 8:00 PM</div></div></div>
+            <div class="flex gap-3 items-start"><div class="w-10 h-10 bg-green-50 rounded-lg flex flex-col items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-green-600">MAR</span><span class="text-sm font-bold text-green-600">15</span></div><div><div class="text-sm font-medium">Youth Ministry Outreach</div><div class="text-xs text-gray-500">2:00 PM - 5:00 PM</div></div></div>
+            <div class="flex gap-3 items-start"><div class="w-10 h-10 bg-purple-50 rounded-lg flex flex-col items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-purple-600">MAR</span><span class="text-sm font-bold text-purple-600">22</span></div><div><div class="text-sm font-medium">Easter Convention</div><div class="text-xs text-gray-500">All Day Event</div></div></div>
+          </div>
+        </div>
+      </div>
+      <!-- Bottom Row -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div class="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+          <div class="flex items-center justify-between mb-4"><h3 class="font-semibold">Recent Members</h3><a href="#" onclick="navigateTo('members')" class="text-sm text-brand-600 hover:underline">View all</a></div>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3"><div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center text-xs font-semibold text-blue-700">AK</div><div class="flex-1"><div class="text-sm font-medium">Akua Mensah</div><div class="text-xs text-gray-500">Joined Feb 28, 2026</div></div><span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Active</span></div>
+            <div class="flex items-center gap-3"><div class="w-9 h-9 bg-purple-100 rounded-full flex items-center justify-center text-xs font-semibold text-purple-700">KO</div><div class="flex-1"><div class="text-sm font-medium">Kwame Owusu</div><div class="text-xs text-gray-500">Joined Feb 25, 2026</div></div><span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Active</span></div>
+            <div class="flex items-center gap-3"><div class="w-9 h-9 bg-amber-100 rounded-full flex items-center justify-center text-xs font-semibold text-amber-700">EA</div><div class="flex-1"><div class="text-sm font-medium">Esi Appiah</div><div class="text-xs text-gray-500">Joined Feb 20, 2026</div></div><span class="text-xs bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded-full">Visitor</span></div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+          <div class="flex items-center justify-between mb-4"><h3 class="font-semibold">Pending Follow-ups</h3><a href="#" onclick="navigateTo('followups')" class="text-sm text-brand-600 hover:underline">View all</a></div>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3"><div class="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></div><div class="flex-1"><div class="text-sm font-medium">Visit Ama Darko - absent 3 weeks</div><div class="text-xs text-gray-500">Assigned to: Deacon Mensah</div></div><span class="text-xs bg-red-50 text-red-700 px-2 py-0.5 rounded-full">Overdue</span></div>
+            <div class="flex items-center gap-3"><div class="w-2 h-2 bg-amber-500 rounded-full flex-shrink-0"></div><div class="flex-1"><div class="text-sm font-medium">New visitor follow-up - Kofi Asante</div><div class="text-xs text-gray-500">Assigned to: Elder Adjei</div></div><span class="text-xs bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full">Pending</span></div>
+            <div class="flex items-center gap-3"><div class="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div><div class="flex-1"><div class="text-sm font-medium">Pastoral care - Yaa Boateng</div><div class="text-xs text-gray-500">Assigned to: Pastor Mensah</div></div><span class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">In Progress</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEMBERS PAGE -->
+    <div id="page-members" class="page p-6">
+      <div class="flex items-center justify-between mb-6">
+        <div><h1 class="text-2xl font-bold">Members</h1><p class="text-gray-500 text-sm">Manage church membership records</p></div>
+        <button class="bg-brand-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-brand-700 flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          Add Member
+        </button>
+      </div>
+      <!-- Filters -->
+      <div class="bg-white rounded-xl border border-gray-200 shadow-sm mb-5">
+        <div class="p-4 flex flex-wrap items-center gap-3 border-b border-gray-100">
+          <div class="relative flex-1 min-w-[200px]">
+            <svg class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" placeholder="Search by name, email, phone..." class="pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm w-full focus:outline-none focus:ring-2 focus:ring-brand-500">
+          </div>
+          <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white"><option>All Statuses</option><option>Active</option><option>Inactive</option><option>Visitor</option></select>
+          <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white"><option>All Ministries</option><option>Choir</option><option>Youth</option><option>Women's</option><option>Men's</option></select>
+          <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white"><option>All Gender</option><option>Male</option><option>Female</option></select>
+          <button class="text-sm text-gray-500 hover:text-gray-700 px-3 py-2 border border-gray-200 rounded-lg flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            Export
+          </button>
+        </div>
+        <!-- Table -->
+        <table class="w-full">
+          <thead><tr class="text-left text-xs text-gray-500 uppercase tracking-wider border-b border-gray-100">
+            <th class="px-5 py-3"><input type="checkbox" class="rounded"></th>
+            <th class="px-5 py-3">Member</th><th class="px-5 py-3">Phone</th><th class="px-5 py-3">Status</th><th class="px-5 py-3">Ministry</th><th class="px-5 py-3">Joined</th><th class="px-5 py-3"></th>
+          </tr></thead>
+          <tbody class="divide-y divide-gray-50">
+            <tr class="hover:bg-gray-50"><td class="px-5 py-3"><input type="checkbox" class="rounded"></td><td class="px-5 py-3"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center text-xs font-semibold text-blue-700">AM</div><div><div class="text-sm font-medium">Akua Mensah</div><div class="text-xs text-gray-500">akua@email.com</div></div></div></td><td class="px-5 py-3 text-sm">024-555-0123</td><td class="px-5 py-3"><span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Active</span></td><td class="px-5 py-3 text-sm">Choir, Women's</td><td class="px-5 py-3 text-sm text-gray-500">Feb 28, 2026</td><td class="px-5 py-3"><button class="text-gray-400 hover:text-gray-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01"/></svg></button></td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-5 py-3"><input type="checkbox" class="rounded"></td><td class="px-5 py-3"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-purple-100 rounded-full flex items-center justify-center text-xs font-semibold text-purple-700">KO</div><div><div class="text-sm font-medium">Kwame Owusu</div><div class="text-xs text-gray-500">kwame@email.com</div></div></div></td><td class="px-5 py-3 text-sm">020-555-0456</td><td class="px-5 py-3"><span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Active</span></td><td class="px-5 py-3 text-sm">Youth, Men's</td><td class="px-5 py-3 text-sm text-gray-500">Feb 25, 2026</td><td class="px-5 py-3"><button class="text-gray-400 hover:text-gray-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01"/></svg></button></td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-5 py-3"><input type="checkbox" class="rounded"></td><td class="px-5 py-3"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-amber-100 rounded-full flex items-center justify-center text-xs font-semibold text-amber-700">EA</div><div><div class="text-sm font-medium">Esi Appiah</div><div class="text-xs text-gray-500">esi@email.com</div></div></div></td><td class="px-5 py-3 text-sm">027-555-0789</td><td class="px-5 py-3"><span class="text-xs bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded-full">Visitor</span></td><td class="px-5 py-3 text-sm">—</td><td class="px-5 py-3 text-sm text-gray-500">Feb 20, 2026</td><td class="px-5 py-3"><button class="text-gray-400 hover:text-gray-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01"/></svg></button></td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-5 py-3"><input type="checkbox" class="rounded"></td><td class="px-5 py-3"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-green-100 rounded-full flex items-center justify-center text-xs font-semibold text-green-700">YB</div><div><div class="text-sm font-medium">Yaa Boateng</div><div class="text-xs text-gray-500">yaa@email.com</div></div></div></td><td class="px-5 py-3 text-sm">055-555-0321</td><td class="px-5 py-3"><span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Active</span></td><td class="px-5 py-3 text-sm">Women's</td><td class="px-5 py-3 text-sm text-gray-500">Jan 15, 2026</td><td class="px-5 py-3"><button class="text-gray-400 hover:text-gray-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01"/></svg></button></td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-5 py-3"><input type="checkbox" class="rounded"></td><td class="px-5 py-3"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-red-100 rounded-full flex items-center justify-center text-xs font-semibold text-red-700">KA</div><div><div class="text-sm font-medium">Kofi Asante</div><div class="text-xs text-gray-500">kofi@email.com</div></div></div></td><td class="px-5 py-3 text-sm">050-555-0654</td><td class="px-5 py-3"><span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Inactive</span></td><td class="px-5 py-3 text-sm">—</td><td class="px-5 py-3 text-sm text-gray-500">Dec 10, 2025</td><td class="px-5 py-3"><button class="text-gray-400 hover:text-gray-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01"/></svg></button></td></tr>
+          </tbody>
+        </table>
+        <div class="px-5 py-3 flex items-center justify-between border-t border-gray-100">
+          <span class="text-sm text-gray-500">Showing 1-5 of 342 members</span>
+          <div class="flex gap-1"><button class="px-3 py-1.5 text-sm border border-gray-200 rounded-lg hover:bg-gray-50">Previous</button><button class="px-3 py-1.5 text-sm bg-brand-600 text-white rounded-lg">1</button><button class="px-3 py-1.5 text-sm border border-gray-200 rounded-lg hover:bg-gray-50">2</button><button class="px-3 py-1.5 text-sm border border-gray-200 rounded-lg hover:bg-gray-50">3</button><button class="px-3 py-1.5 text-sm border border-gray-200 rounded-lg hover:bg-gray-50">Next</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MINISTRIES PAGE -->
+    <div id="page-ministries" class="page p-6">
+      <div class="flex items-center justify-between mb-6">
+        <div><h1 class="text-2xl font-bold">Ministries</h1><p class="text-gray-500 text-sm">Manage church ministries and groups</p></div>
+        <button class="bg-brand-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-brand-700 flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>New Ministry</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-md transition"><div class="h-2 bg-blue-500"></div><div class="p-5"><div class="flex items-center gap-3 mb-3"><div class="w-11 h-11 bg-blue-50 rounded-lg flex items-center justify-center text-xl">🎵</div><div><h3 class="font-semibold">Choir Ministry</h3><p class="text-xs text-gray-500">Music & Worship</p></div></div><p class="text-sm text-gray-600 mb-4">Leading the congregation in praise and worship through music and song.</p><div class="flex items-center justify-between"><div class="flex -space-x-2"><div class="w-7 h-7 bg-blue-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-purple-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-green-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-gray-200 rounded-full border-2 border-white text-xs flex items-center justify-center">+22</div></div><span class="text-xs text-gray-500">25 members</span></div></div></div>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-md transition"><div class="h-2 bg-green-500"></div><div class="p-5"><div class="flex items-center gap-3 mb-3"><div class="w-11 h-11 bg-green-50 rounded-lg flex items-center justify-center text-xl">🌱</div><div><h3 class="font-semibold">Youth Ministry</h3><p class="text-xs text-gray-500">Ages 13-25</p></div></div><p class="text-sm text-gray-600 mb-4">Empowering young people to grow in faith, leadership, and service.</p><div class="flex items-center justify-between"><div class="flex -space-x-2"><div class="w-7 h-7 bg-green-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-amber-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-red-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-gray-200 rounded-full border-2 border-white text-xs flex items-center justify-center">+32</div></div><span class="text-xs text-gray-500">35 members</span></div></div></div>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-md transition"><div class="h-2 bg-pink-500"></div><div class="p-5"><div class="flex items-center gap-3 mb-3"><div class="w-11 h-11 bg-pink-50 rounded-lg flex items-center justify-center text-xl">👩</div><div><h3 class="font-semibold">Women's Ministry</h3><p class="text-xs text-gray-500">Women's Fellowship</p></div></div><p class="text-sm text-gray-600 mb-4">Supporting women in spiritual growth, fellowship, and community impact.</p><div class="flex items-center justify-between"><div class="flex -space-x-2"><div class="w-7 h-7 bg-pink-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-purple-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-blue-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-gray-200 rounded-full border-2 border-white text-xs flex items-center justify-center">+27</div></div><span class="text-xs text-gray-500">30 members</span></div></div></div>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-md transition"><div class="h-2 bg-indigo-500"></div><div class="p-5"><div class="flex items-center gap-3 mb-3"><div class="w-11 h-11 bg-indigo-50 rounded-lg flex items-center justify-center text-xl">👨</div><div><h3 class="font-semibold">Men's Ministry</h3><p class="text-xs text-gray-500">Men's Fellowship</p></div></div><p class="text-sm text-gray-600 mb-4">Building strong men of faith through Bible study, mentorship, and service.</p><div class="flex items-center justify-between"><div class="flex -space-x-2"><div class="w-7 h-7 bg-indigo-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-gray-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-blue-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-gray-200 rounded-full border-2 border-white text-xs flex items-center justify-center">+25</div></div><span class="text-xs text-gray-500">28 members</span></div></div></div>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-md transition"><div class="h-2 bg-amber-500"></div><div class="p-5"><div class="flex items-center gap-3 mb-3"><div class="w-11 h-11 bg-amber-50 rounded-lg flex items-center justify-center text-xl">🧒</div><div><h3 class="font-semibold">Children's Ministry</h3><p class="text-xs text-gray-500">Ages 3-12</p></div></div><p class="text-sm text-gray-600 mb-4">Nurturing children's faith through fun Bible lessons and activities.</p><div class="flex items-center justify-between"><div class="flex -space-x-2"><div class="w-7 h-7 bg-amber-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-green-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-gray-200 rounded-full border-2 border-white text-xs flex items-center justify-center">+8</div></div><span class="text-xs text-gray-500">10 leaders</span></div></div></div>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-md transition"><div class="h-2 bg-red-500"></div><div class="p-5"><div class="flex items-center gap-3 mb-3"><div class="w-11 h-11 bg-red-50 rounded-lg flex items-center justify-center text-xl">🤝</div><div><h3 class="font-semibold">Ushering Ministry</h3><p class="text-xs text-gray-500">Hospitality & Service</p></div></div><p class="text-sm text-gray-600 mb-4">Welcoming and assisting members and visitors during church services.</p><div class="flex items-center justify-between"><div class="flex -space-x-2"><div class="w-7 h-7 bg-red-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-amber-200 rounded-full border-2 border-white"></div><div class="w-7 h-7 bg-gray-200 rounded-full border-2 border-white text-xs flex items-center justify-center">+13</div></div><span class="text-xs text-gray-500">15 members</span></div></div></div>
+      </div>
+    </div>
+
+    <!-- ATTENDANCE PAGE -->
+    <div id="page-attendance" class="page p-6">
+      <div class="flex items-center justify-between mb-6">
+        <div><h1 class="text-2xl font-bold">Attendance</h1><p class="text-gray-500 text-sm">Track and record service attendance</p></div>
+        <button class="bg-brand-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-brand-700 flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>Record Attendance</button>
+      </div>
+      <!-- Summary Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white rounded-xl p-4 border border-gray-200"><div class="text-sm text-gray-500">This Sunday</div><div class="text-2xl font-bold mt-1">278</div><div class="text-xs text-green-600">+5 vs last week</div></div>
+        <div class="bg-white rounded-xl p-4 border border-gray-200"><div class="text-sm text-gray-500">Midweek Service</div><div class="text-2xl font-bold mt-1">142</div><div class="text-xs text-red-500">-8 vs last week</div></div>
+        <div class="bg-white rounded-xl p-4 border border-gray-200"><div class="text-sm text-gray-500">Avg. Attendance</div><div class="text-2xl font-bold mt-1">265</div><div class="text-xs text-gray-500">Last 4 weeks</div></div>
+        <div class="bg-white rounded-xl p-4 border border-gray-200"><div class="text-sm text-gray-500">Attendance Rate</div><div class="text-2xl font-bold mt-1">81%</div><div class="text-xs text-green-600">+2% this month</div></div>
+      </div>
+      <!-- Attendance Records -->
+      <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+        <div class="p-4 flex items-center gap-3 border-b border-gray-100">
+          <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm"><option>All Types</option><option>Sunday Service</option><option>Midweek Service</option><option>Ministry Meeting</option><option>Special Event</option></select>
+          <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm"><option>March 2026</option><option>February 2026</option><option>January 2026</option></select>
+        </div>
+        <table class="w-full">
+          <thead><tr class="text-left text-xs text-gray-500 uppercase tracking-wider border-b border-gray-100"><th class="px-5 py-3">Date</th><th class="px-5 py-3">Service Type</th><th class="px-5 py-3">Total Present</th><th class="px-5 py-3">Male</th><th class="px-5 py-3">Female</th><th class="px-5 py-3">Visitors</th><th class="px-5 py-3">Recorded By</th></tr></thead>
+          <tbody class="divide-y divide-gray-50">
+            <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-sm font-medium">Mar 2, 2026</td><td class="px-5 py-3"><span class="text-xs bg-brand-50 text-brand-700 px-2 py-0.5 rounded-full">Sunday Service</span></td><td class="px-5 py-3 text-sm font-semibold">278</td><td class="px-5 py-3 text-sm">130</td><td class="px-5 py-3 text-sm">148</td><td class="px-5 py-3 text-sm">5</td><td class="px-5 py-3 text-sm text-gray-500">Elder Adjei</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-sm font-medium">Feb 26, 2026</td><td class="px-5 py-3"><span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Midweek Service</span></td><td class="px-5 py-3 text-sm font-semibold">142</td><td class="px-5 py-3 text-sm">65</td><td class="px-5 py-3 text-sm">77</td><td class="px-5 py-3 text-sm">2</td><td class="px-5 py-3 text-sm text-gray-500">Deacon Mensah</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-sm font-medium">Feb 23, 2026</td><td class="px-5 py-3"><span class="text-xs bg-brand-50 text-brand-700 px-2 py-0.5 rounded-full">Sunday Service</span></td><td class="px-5 py-3 text-sm font-semibold">273</td><td class="px-5 py-3 text-sm">128</td><td class="px-5 py-3 text-sm">145</td><td class="px-5 py-3 text-sm">3</td><td class="px-5 py-3 text-sm text-gray-500">Elder Adjei</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-sm font-medium">Feb 20, 2026</td><td class="px-5 py-3"><span class="text-xs bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full">Ministry Meeting</span></td><td class="px-5 py-3 text-sm font-semibold">45</td><td class="px-5 py-3 text-sm">20</td><td class="px-5 py-3 text-sm">25</td><td class="px-5 py-3 text-sm">0</td><td class="px-5 py-3 text-sm text-gray-500">Sister Ama</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- EVENTS PAGE -->
+    <div id="page-events" class="page p-6">
+      <div class="flex items-center justify-between mb-6">
+        <div><h1 class="text-2xl font-bold">Events</h1><p class="text-gray-500 text-sm">Manage church events and calendar</p></div>
+        <button class="bg-brand-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-brand-700 flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>Create Event</button>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div class="lg:col-span-2 space-y-4">
+          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex gap-5 hover:shadow-md transition">
+            <div class="w-16 h-16 bg-red-50 rounded-xl flex flex-col items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-red-600">MAR</span><span class="text-2xl font-bold text-red-600">9</span></div>
+            <div class="flex-1"><div class="flex items-center gap-2 mb-1"><h3 class="font-semibold">Sunday Worship Service</h3><span class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">Service</span></div><p class="text-sm text-gray-500 mb-2">9:00 AM - 12:00 PM &bull; Main Sanctuary</p><p class="text-sm text-gray-600">Regular Sunday worship service with praise, worship, and the Word.</p></div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex gap-5 hover:shadow-md transition">
+            <div class="w-16 h-16 bg-blue-50 rounded-xl flex flex-col items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-blue-600">MAR</span><span class="text-2xl font-bold text-blue-600">12</span></div>
+            <div class="flex-1"><div class="flex items-center gap-2 mb-1"><h3 class="font-semibold">Midweek Bible Study</h3><span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Meeting</span></div><p class="text-sm text-gray-500 mb-2">6:30 PM - 8:00 PM &bull; Fellowship Hall</p><p class="text-sm text-gray-600">Studying the book of Ephesians - Chapter 4: Unity in the Body.</p></div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex gap-5 hover:shadow-md transition">
+            <div class="w-16 h-16 bg-green-50 rounded-xl flex flex-col items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-green-600">MAR</span><span class="text-2xl font-bold text-green-600">15</span></div>
+            <div class="flex-1"><div class="flex items-center gap-2 mb-1"><h3 class="font-semibold">Youth Ministry Outreach</h3><span class="text-xs bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full">Outreach</span></div><p class="text-sm text-gray-500 mb-2">2:00 PM - 5:00 PM &bull; Calabash Community Center</p><p class="text-sm text-gray-600">Community outreach program with youth engagement activities.</p></div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex gap-5 hover:shadow-md transition">
+            <div class="w-16 h-16 bg-purple-50 rounded-xl flex flex-col items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-purple-600">MAR</span><span class="text-2xl font-bold text-purple-600">22</span></div>
+            <div class="flex-1"><div class="flex items-center gap-2 mb-1"><h3 class="font-semibold">Easter Convention - Day 1</h3><span class="text-xs bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full">Conference</span></div><p class="text-sm text-gray-500 mb-2">All Day &bull; Main Sanctuary + Grounds</p><p class="text-sm text-gray-600">Annual Easter convention with guest speakers and special programs.</p></div>
+          </div>
+        </div>
+        <div>
+          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+            <h3 class="font-semibold mb-4">March 2026</h3>
+            <div class="grid grid-cols-7 gap-1 text-center text-xs">
+              <span class="text-gray-400 py-1">Su</span><span class="text-gray-400 py-1">Mo</span><span class="text-gray-400 py-1">Tu</span><span class="text-gray-400 py-1">We</span><span class="text-gray-400 py-1">Th</span><span class="text-gray-400 py-1">Fr</span><span class="text-gray-400 py-1">Sa</span>
+              <span class="py-1.5 rounded">1</span><span class="py-1.5 rounded">2</span><span class="py-1.5 rounded">3</span><span class="py-1.5 rounded bg-brand-600 text-white font-semibold">4</span><span class="py-1.5 rounded">5</span><span class="py-1.5 rounded">6</span><span class="py-1.5 rounded">7</span>
+              <span class="py-1.5 rounded">8</span><span class="py-1.5 rounded bg-blue-100 text-blue-700 font-semibold">9</span><span class="py-1.5 rounded">10</span><span class="py-1.5 rounded">11</span><span class="py-1.5 rounded bg-blue-100 text-blue-700 font-semibold">12</span><span class="py-1.5 rounded">13</span><span class="py-1.5 rounded">14</span>
+              <span class="py-1.5 rounded bg-green-100 text-green-700 font-semibold">15</span><span class="py-1.5 rounded">16</span><span class="py-1.5 rounded">17</span><span class="py-1.5 rounded">18</span><span class="py-1.5 rounded">19</span><span class="py-1.5 rounded">20</span><span class="py-1.5 rounded">21</span>
+              <span class="py-1.5 rounded bg-purple-100 text-purple-700 font-semibold">22</span><span class="py-1.5 rounded bg-purple-100 text-purple-700 font-semibold">23</span><span class="py-1.5 rounded">24</span><span class="py-1.5 rounded">25</span><span class="py-1.5 rounded">26</span><span class="py-1.5 rounded">27</span><span class="py-1.5 rounded">28</span>
+              <span class="py-1.5 rounded">29</span><span class="py-1.5 rounded">30</span><span class="py-1.5 rounded">31</span>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 mt-4">
+            <h3 class="font-semibold mb-3">Event Categories</h3>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-3 h-3 bg-blue-500 rounded-full"></span>Services</span><span class="text-gray-500">8</span></div>
+              <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-3 h-3 bg-green-500 rounded-full"></span>Meetings</span><span class="text-gray-500">4</span></div>
+              <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-3 h-3 bg-amber-500 rounded-full"></span>Outreach</span><span class="text-gray-500">2</span></div>
+              <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-3 h-3 bg-purple-500 rounded-full"></span>Conference</span><span class="text-gray-500">1</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FINANCES PAGE -->
+    <div id="page-finances" class="page p-6">
+      <div class="flex items-center justify-between mb-6">
+        <div><h1 class="text-2xl font-bold">Finances</h1><p class="text-gray-500 text-sm">Track contributions, tithes, and pledges</p></div>
+        <div class="flex gap-2">
+          <button class="border border-gray-200 text-gray-700 px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>Export</button>
+          <button class="bg-brand-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-brand-700 flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>Record Contribution</button>
+        </div>
+      </div>
+      <!-- Finance Summary -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white rounded-xl p-4 border border-gray-200"><div class="text-sm text-gray-500">Total Income (March)</div><div class="text-2xl font-bold mt-1">GH&#8373; 52,480</div><div class="text-xs text-green-600">+12% vs Feb</div></div>
+        <div class="bg-white rounded-xl p-4 border border-gray-200"><div class="text-sm text-gray-500">Tithes</div><div class="text-2xl font-bold mt-1">GH&#8373; 35,200</div><div class="text-xs text-gray-500">67% of total</div></div>
+        <div class="bg-white rounded-xl p-4 border border-gray-200"><div class="text-sm text-gray-500">Offerings</div><div class="text-2xl font-bold mt-1">GH&#8373; 12,580</div><div class="text-xs text-gray-500">24% of total</div></div>
+        <div class="bg-white rounded-xl p-4 border border-gray-200"><div class="text-sm text-gray-500">Active Pledges</div><div class="text-2xl font-bold mt-1">GH&#8373; 125,000</div><div class="text-xs text-amber-600">42% fulfilled</div></div>
+      </div>
+      <!-- Tabs -->
+      <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+        <div class="border-b border-gray-200 px-5"><div class="flex gap-6"><button class="py-3 text-sm font-medium text-brand-600 border-b-2 border-brand-600">Contributions</button><button class="py-3 text-sm font-medium text-gray-500 hover:text-gray-700">Pledges</button><button class="py-3 text-sm font-medium text-gray-500 hover:text-gray-700">Summary</button></div></div>
+        <table class="w-full">
+          <thead><tr class="text-left text-xs text-gray-500 uppercase tracking-wider border-b border-gray-100"><th class="px-5 py-3">Date</th><th class="px-5 py-3">Member</th><th class="px-5 py-3">Type</th><th class="px-5 py-3">Amount</th><th class="px-5 py-3">Method</th><th class="px-5 py-3">Reference</th></tr></thead>
+          <tbody class="divide-y divide-gray-50">
+            <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-sm">Mar 2, 2026</td><td class="px-5 py-3 text-sm font-medium">Akua Mensah</td><td class="px-5 py-3"><span class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">Tithe</span></td><td class="px-5 py-3 text-sm font-semibold">GH&#8373; 500.00</td><td class="px-5 py-3 text-sm">Mobile Money</td><td class="px-5 py-3 text-sm text-gray-500">TXN-001234</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-sm">Mar 2, 2026</td><td class="px-5 py-3 text-sm font-medium">Kwame Owusu</td><td class="px-5 py-3"><span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Offering</span></td><td class="px-5 py-3 text-sm font-semibold">GH&#8373; 200.00</td><td class="px-5 py-3 text-sm">Cash</td><td class="px-5 py-3 text-sm text-gray-500">—</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-sm">Mar 2, 2026</td><td class="px-5 py-3 text-sm font-medium">Yaa Boateng</td><td class="px-5 py-3"><span class="text-xs bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full">Special Offering</span></td><td class="px-5 py-3 text-sm font-semibold">GH&#8373; 1,000.00</td><td class="px-5 py-3 text-sm">Bank Transfer</td><td class="px-5 py-3 text-sm text-gray-500">REF-56789</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-sm">Feb 23, 2026</td><td class="px-5 py-3 text-sm font-medium">Kofi Asante</td><td class="px-5 py-3"><span class="text-xs bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full">Pledge Payment</span></td><td class="px-5 py-3 text-sm font-semibold">GH&#8373; 2,500.00</td><td class="px-5 py-3 text-sm">Bank Transfer</td><td class="px-5 py-3 text-sm text-gray-500">REF-56790</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- FOLLOW-UPS PAGE -->
+    <div id="page-followups" class="page p-6">
+      <div class="flex items-center justify-between mb-6">
+        <div><h1 class="text-2xl font-bold">Follow-ups</h1><p class="text-gray-500 text-sm">Track pastoral care and member follow-ups</p></div>
+        <button class="bg-brand-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-brand-700 flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>New Follow-up</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white rounded-xl p-4 border border-gray-200"><div class="text-sm text-gray-500">Pending</div><div class="text-2xl font-bold mt-1 text-amber-600">8</div></div>
+        <div class="bg-white rounded-xl p-4 border border-gray-200"><div class="text-sm text-gray-500">In Progress</div><div class="text-2xl font-bold mt-1 text-blue-600">5</div></div>
+        <div class="bg-white rounded-xl p-4 border border-gray-200"><div class="text-sm text-gray-500">Completed (March)</div><div class="text-2xl font-bold mt-1 text-green-600">12</div></div>
+        <div class="bg-white rounded-xl p-4 border border-gray-200"><div class="text-sm text-gray-500">Overdue</div><div class="text-2xl font-bold mt-1 text-red-600">3</div></div>
+      </div>
+      <div class="space-y-3">
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex items-center gap-4 border-l-4 border-l-red-500">
+          <div class="flex-1"><div class="flex items-center gap-2 mb-1"><h3 class="font-semibold text-sm">Visit Ama Darko - absent 3 weeks</h3><span class="text-xs bg-red-50 text-red-700 px-2 py-0.5 rounded-full">Overdue</span><span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Absent Member</span></div><p class="text-xs text-gray-500">Assigned to: Deacon Mensah &bull; Due: Feb 25, 2026</p></div>
+          <button class="text-sm text-brand-600 hover:underline">Update</button>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex items-center gap-4 border-l-4 border-l-amber-500">
+          <div class="flex-1"><div class="flex items-center gap-2 mb-1"><h3 class="font-semibold text-sm">New visitor follow-up - Kofi Asante</h3><span class="text-xs bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full">Pending</span><span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">New Visitor</span></div><p class="text-xs text-gray-500">Assigned to: Elder Adjei &bull; Due: Mar 7, 2026</p></div>
+          <button class="text-sm text-brand-600 hover:underline">Update</button>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex items-center gap-4 border-l-4 border-l-blue-500">
+          <div class="flex-1"><div class="flex items-center gap-2 mb-1"><h3 class="font-semibold text-sm">Pastoral care - Yaa Boateng (hospital visit)</h3><span class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">In Progress</span><span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Pastoral Care</span></div><p class="text-xs text-gray-500">Assigned to: Pastor Mensah &bull; Started: Mar 1, 2026</p></div>
+          <button class="text-sm text-brand-600 hover:underline">Update</button>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex items-center gap-4 border-l-4 border-l-green-500">
+          <div class="flex-1"><div class="flex items-center gap-2 mb-1"><h3 class="font-semibold text-sm">Welcome call - Esi Appiah (first-time visitor)</h3><span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Completed</span><span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">New Visitor</span></div><p class="text-xs text-gray-500">Completed by: Sister Ama &bull; Completed: Feb 28, 2026</p></div>
+          <button class="text-sm text-brand-600 hover:underline">View</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORTS PAGE -->
+    <div id="page-reports" class="page p-6">
+      <div class="flex items-center justify-between mb-6">
+        <div><h1 class="text-2xl font-bold">Reports</h1><p class="text-gray-500 text-sm">Generate and view church reports</p></div>
+        <div class="flex gap-2">
+          <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm"><option>March 2026</option><option>February 2026</option><option>Q1 2026</option><option>2025 Annual</option></select>
+          <button class="border border-gray-200 text-gray-700 px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>Download PDF</button>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <!-- Membership Report -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+          <h3 class="font-semibold mb-4">Membership Overview</h3>
+          <div class="space-y-3">
+            <div><div class="flex justify-between text-sm mb-1"><span>Active Members</span><span class="font-semibold">298 (87%)</span></div><div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-green-500 rounded-full h-2" style="width:87%"></div></div></div>
+            <div><div class="flex justify-between text-sm mb-1"><span>Inactive Members</span><span class="font-semibold">24 (7%)</span></div><div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-gray-400 rounded-full h-2" style="width:7%"></div></div></div>
+            <div><div class="flex justify-between text-sm mb-1"><span>Visitors</span><span class="font-semibold">15 (4%)</span></div><div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-amber-500 rounded-full h-2" style="width:4%"></div></div></div>
+            <div><div class="flex justify-between text-sm mb-1"><span>Transferred</span><span class="font-semibold">5 (2%)</span></div><div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-blue-400 rounded-full h-2" style="width:2%"></div></div></div>
+          </div>
+        </div>
+        <!-- Financial Report -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+          <h3 class="font-semibold mb-4">Financial Summary (March)</h3>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center py-2 border-b border-gray-100"><span class="text-sm">Tithes</span><span class="text-sm font-semibold">GH&#8373; 35,200</span></div>
+            <div class="flex justify-between items-center py-2 border-b border-gray-100"><span class="text-sm">Offerings</span><span class="text-sm font-semibold">GH&#8373; 12,580</span></div>
+            <div class="flex justify-between items-center py-2 border-b border-gray-100"><span class="text-sm">Special Offerings</span><span class="text-sm font-semibold">GH&#8373; 3,200</span></div>
+            <div class="flex justify-between items-center py-2 border-b border-gray-100"><span class="text-sm">Donations</span><span class="text-sm font-semibold">GH&#8373; 1,500</span></div>
+            <div class="flex justify-between items-center py-2 font-semibold"><span class="text-sm">Total Income</span><span class="text-sm text-green-600">GH&#8373; 52,480</span></div>
+          </div>
+        </div>
+        <!-- Attendance Report -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+          <h3 class="font-semibold mb-4">Attendance Trends</h3>
+          <div class="h-44 flex items-end gap-2 px-1">
+            <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full rounded-t" style="height:65%; background: linear-gradient(to top, #4f46e5, #818cf8)"></div><span class="text-[10px] text-gray-500">W1</span></div>
+            <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full rounded-t" style="height:72%; background: linear-gradient(to top, #4f46e5, #818cf8)"></div><span class="text-[10px] text-gray-500">W2</span></div>
+            <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full rounded-t" style="height:68%; background: linear-gradient(to top, #4f46e5, #818cf8)"></div><span class="text-[10px] text-gray-500">W3</span></div>
+            <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full rounded-t" style="height:80%; background: linear-gradient(to top, #4f46e5, #818cf8)"></div><span class="text-[10px] text-gray-500">W4</span></div>
+          </div>
+          <div class="mt-3 text-sm text-gray-500 text-center">Average: 265 &bull; Peak: 278 (Week 4)</div>
+        </div>
+        <!-- Ministry Report -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+          <h3 class="font-semibold mb-4">Ministry Participation</h3>
+          <div class="space-y-3">
+            <div><div class="flex justify-between text-sm mb-1"><span>Youth Ministry</span><span>35 members</span></div><div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-green-500 rounded-full h-2" style="width:70%"></div></div></div>
+            <div><div class="flex justify-between text-sm mb-1"><span>Women's Ministry</span><span>30 members</span></div><div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-pink-500 rounded-full h-2" style="width:60%"></div></div></div>
+            <div><div class="flex justify-between text-sm mb-1"><span>Men's Ministry</span><span>28 members</span></div><div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-indigo-500 rounded-full h-2" style="width:56%"></div></div></div>
+            <div><div class="flex justify-between text-sm mb-1"><span>Choir Ministry</span><span>25 members</span></div><div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-blue-500 rounded-full h-2" style="width:50%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANNOUNCEMENTS PAGE -->
+    <div id="page-announcements" class="page p-6">
+      <div class="flex items-center justify-between mb-6">
+        <div><h1 class="text-2xl font-bold">Announcements</h1><p class="text-gray-500 text-sm">Create and manage church announcements</p></div>
+        <button class="bg-brand-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-brand-700 flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>New Announcement</button>
+      </div>
+      <div class="space-y-4">
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+          <div class="flex items-start justify-between mb-2"><div><h3 class="font-semibold">Easter Convention Registration Now Open</h3><p class="text-xs text-gray-500">Posted by Pastor Mensah &bull; Mar 3, 2026</p></div><span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Active</span></div>
+          <p class="text-sm text-gray-600 mb-3">Registration for the annual Easter Convention (March 22-24) is now open. Please register at the church office or through the mobile app. Early bird registration closes March 15.</p>
+          <div class="flex gap-4 text-xs text-gray-500"><span>Sent to: All Members</span><span>Via: App, SMS</span><span>Read: 245/342</span></div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+          <div class="flex items-start justify-between mb-2"><div><h3 class="font-semibold">Youth Ministry Outreach Volunteers Needed</h3><p class="text-xs text-gray-500">Posted by Youth Leader &bull; Mar 1, 2026</p></div><span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Active</span></div>
+          <p class="text-sm text-gray-600 mb-3">We need 20 volunteers for the community outreach on March 15. Sign up at the youth ministry desk after Sunday service.</p>
+          <div class="flex gap-4 text-xs text-gray-500"><span>Sent to: Youth Ministry</span><span>Via: App</span><span>Read: 28/35</span></div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 opacity-60">
+          <div class="flex items-start justify-between mb-2"><div><h3 class="font-semibold">Church Building Fund Update</h3><p class="text-xs text-gray-500">Posted by Elder Adjei &bull; Feb 20, 2026</p></div><span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Expired</span></div>
+          <p class="text-sm text-gray-600 mb-3">Thank you for your generous contributions to the building fund. We have raised GH&#8373; 85,000 of our GH&#8373; 200,000 goal.</p>
+          <div class="flex gap-4 text-xs text-gray-500"><span>Sent to: All Members</span><span>Via: App, Email</span><span>Read: 310/342</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS PAGE -->
+    <div id="page-settings" class="page p-6">
+      <div class="mb-6"><h1 class="text-2xl font-bold">Settings</h1><p class="text-gray-500 text-sm">Manage system preferences and configuration</p></div>
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-5">
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-3">
+            <div class="space-y-1">
+              <button class="w-full text-left px-3 py-2 text-sm font-medium bg-brand-50 text-brand-700 rounded-lg">General</button>
+              <button class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">Users & Roles</button>
+              <button class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">Notifications</button>
+              <button class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">Email Templates</button>
+              <button class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg">Integrations</button>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-3">
+          <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+            <h3 class="font-semibold mb-4">Church Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Church Name</label><input type="text" value="The Apostolic Church - Calabash Assembly" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm"></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">District</label><input type="text" value="Calabash District" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm"></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Phone</label><input type="text" value="+233 24 555 0100" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm"></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Email</label><input type="text" value="info@taccalabrash.org" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm"></div>
+            </div>
+            <h3 class="font-semibold mb-4">Service Times</h3>
+            <div class="space-y-2 mb-6">
+              <div class="flex items-center gap-3"><span class="text-sm w-32">Sunday Service</span><input type="text" value="9:00 AM - 12:00 PM" class="px-3 py-2 border border-gray-200 rounded-lg text-sm flex-1"></div>
+              <div class="flex items-center gap-3"><span class="text-sm w-32">Midweek Service</span><input type="text" value="6:30 PM - 8:00 PM" class="px-3 py-2 border border-gray-200 rounded-lg text-sm flex-1"></div>
+            </div>
+            <div class="flex justify-end"><button class="bg-brand-600 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-brand-700">Save Changes</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function navigateTo(page) {
+  // Hide everything first
+  document.getElementById('login-page').classList.remove('active');
+  document.getElementById('app-shell').classList.remove('active', 'visible');
+  document.querySelectorAll('#app-shell .page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+  if (page === 'login') {
+    document.getElementById('login-page').classList.add('active');
+    return;
+  }
+
+  document.getElementById('app-shell').classList.add('active', 'visible');
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+  const navItem = document.querySelector('.nav-item[data-page="' + page + '"]');
+  if (navItem) navItem.classList.add('active');
+}
+</script>
+</body>
+</html>

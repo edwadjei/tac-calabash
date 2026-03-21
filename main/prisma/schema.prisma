@@ -1,0 +1,375 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USER & AUTHENTICATION
+// ============================================
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(ADMIN)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  refreshTokens RefreshToken[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  MINISTRY_LEADER
+}
+
+// ============================================
+// MEMBERS & FAMILIES
+// ============================================
+
+model Member {
+  id              String       @id @default(uuid())
+  firstName       String
+  lastName        String
+  middleName      String?
+  email           String?      @unique
+  phone           String?
+  dateOfBirth     DateTime?
+  gender          Gender?
+  address         String?
+  city            String?
+  profileImage    String?
+  membershipDate  DateTime?
+  membershipStatus MembershipStatus @default(ACTIVE)
+  baptismDate     DateTime?
+  isBaptized      Boolean      @default(false)
+  emergencyContact String?
+  emergencyPhone  String?
+  notes           String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  // Family relationship
+  familyId  String?
+  family    Family?  @relation(fields: [familyId], references: [id])
+  isHeadOfFamily Boolean @default(false)
+
+  // Relations
+  ministryMemberships MinistryMember[]
+  attendances         Attendance[]
+  contributions       Contribution[]
+  pledges             Pledge[]
+  followUps           FollowUp[]
+
+  @@map("members")
+}
+
+model Family {
+  id        String   @id @default(uuid())
+  name      String
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members Member[]
+
+  @@map("families")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum MembershipStatus {
+  ACTIVE
+  INACTIVE
+  VISITOR
+  DECEASED
+  TRANSFERRED
+}
+
+// ============================================
+// MINISTRIES
+// ============================================
+
+model Ministry {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  purpose     String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members      MinistryMember[]
+  events       Event[]
+  announcements Announcement[]
+  attendances  Attendance[]
+
+  @@map("ministries")
+}
+
+model MinistryMember {
+  id         String         @id @default(uuid())
+  memberId   String
+  ministryId String
+  role       MinistryRole   @default(MEMBER)
+  joinedAt   DateTime       @default(now())
+  leftAt     DateTime?
+  isActive   Boolean        @default(true)
+
+  member   Member   @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  ministry Ministry @relation(fields: [ministryId], references: [id], onDelete: Cascade)
+
+  @@unique([memberId, ministryId])
+  @@map("ministry_members")
+}
+
+enum MinistryRole {
+  LEADER
+  ASSISTANT_LEADER
+  SECRETARY
+  TREASURER
+  MEMBER
+}
+
+// ============================================
+// ATTENDANCE
+// ============================================
+
+model Attendance {
+  id         String         @id @default(uuid())
+  memberId   String
+  eventId    String?
+  ministryId String?
+  date       DateTime
+  type       AttendanceType
+  isPresent  Boolean        @default(true)
+  notes      String?
+  createdAt  DateTime       @default(now())
+
+  member   Member    @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  event    Event?    @relation(fields: [eventId], references: [id])
+  ministry Ministry? @relation(fields: [ministryId], references: [id])
+
+  @@map("attendances")
+}
+
+enum AttendanceType {
+  SUNDAY_SERVICE
+  MIDWEEK_SERVICE
+  MINISTRY_MEETING
+  SPECIAL_EVENT
+}
+
+// ============================================
+// EVENTS & CALENDAR
+// ============================================
+
+model Event {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?
+  isAllDay    Boolean   @default(false)
+  isRecurring Boolean   @default(false)
+  recurrence  String?   // RRULE string
+  category    EventCategory
+  ministryId  String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  ministry    Ministry?    @relation(fields: [ministryId], references: [id])
+  attendances Attendance[]
+
+  @@map("events")
+}
+
+enum EventCategory {
+  SERVICE
+  MEETING
+  FELLOWSHIP
+  OUTREACH
+  CONFERENCE
+  CELEBRATION
+  OTHER
+}
+
+// ============================================
+// FINANCES
+// ============================================
+
+model Contribution {
+  id          String           @id @default(uuid())
+  memberId    String
+  amount      Decimal          @db.Decimal(10, 2)
+  type        ContributionType
+  category    String?
+  date        DateTime
+  method      PaymentMethod    @default(CASH)
+  reference   String?
+  notes       String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@map("contributions")
+}
+
+model Pledge {
+  id           String       @id @default(uuid())
+  memberId     String
+  amount       Decimal      @db.Decimal(10, 2)
+  purpose      String
+  startDate    DateTime
+  endDate      DateTime?
+  frequency    PledgeFrequency
+  amountPaid   Decimal      @default(0) @db.Decimal(10, 2)
+  status       PledgeStatus @default(ACTIVE)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@map("pledges")
+}
+
+enum ContributionType {
+  TITHE
+  OFFERING
+  SPECIAL_OFFERING
+  DONATION
+  PLEDGE_PAYMENT
+}
+
+enum PaymentMethod {
+  CASH
+  CHECK
+  BANK_TRANSFER
+  MOBILE_MONEY
+  CARD
+}
+
+enum PledgeFrequency {
+  ONE_TIME
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  ANNUALLY
+}
+
+enum PledgeStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+// ============================================
+// NOTIFICATIONS & ANNOUNCEMENTS
+// ============================================
+
+model Announcement {
+  id          String    @id @default(uuid())
+  title       String
+  content     String
+  ministryId  String?
+  isPublished Boolean   @default(true)
+  publishedAt DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  ministry Ministry? @relation(fields: [ministryId], references: [id])
+
+  @@map("announcements")
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  title     String
+  body      String
+  type      NotificationType
+  data      Json?
+  sentAt    DateTime         @default(now())
+  createdAt DateTime         @default(now())
+
+  @@map("notifications")
+}
+
+model DeviceToken {
+  id        String   @id @default(uuid())
+  memberId  String
+  token     String   @unique
+  platform  String   // ios, android
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("device_tokens")
+}
+
+enum NotificationType {
+  ANNOUNCEMENT
+  REMINDER
+  EVENT
+  PERSONAL
+}
+
+// ============================================
+// FOLLOW-UP
+// ============================================
+
+model FollowUp {
+  id          String       @id @default(uuid())
+  memberId    String
+  type        FollowUpType
+  reason      String?
+  assignedTo  String?
+  status      FollowUpStatus @default(PENDING)
+  notes       String?
+  dueDate     DateTime?
+  completedAt DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@map("follow_ups")
+}
+
+enum FollowUpType {
+  NEW_VISITOR
+  ABSENT_MEMBER
+  PASTORAL_CARE
+  GENERAL
+}
+
+enum FollowUpStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
