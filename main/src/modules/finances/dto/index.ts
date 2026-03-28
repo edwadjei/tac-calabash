@@ -168,6 +168,22 @@ export class UpdatePledgeDto {
 
 export class ContributionQueryDto {
   @ApiPropertyOptional({
+    description: 'Page number (1-based)',
+    example: 1,
+    default: 1,
+  })
+  @IsOptional()
+  page?: number;
+
+  @ApiPropertyOptional({
+    description: 'Number of records per page',
+    example: 20,
+    default: 20,
+  })
+  @IsOptional()
+  limit?: number;
+
+  @ApiPropertyOptional({
     description: 'Filter by member ID',
     example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
   })

@@ -11,7 +11,7 @@ export const createMemberSchema = z.object({
   middleName: z.string().optional(),
   email: z.string().email('Invalid email address').optional().or(z.literal('')),
   phone: z.string().optional(),
-  dateOfBirth: z.string().optional(),
+  dateOfBirth: z.string().min(1, 'Date of birth is required'),
   gender: z.enum(['MALE', 'FEMALE']).optional(),
   address: z.string().optional(),
   city: z.string().optional(),

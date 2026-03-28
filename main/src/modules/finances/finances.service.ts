@@ -10,7 +10,13 @@ export class FinancesService {
     type?: string;
     startDate?: string;
     endDate?: string;
+    page?: number;
+    limit?: number;
   }) {
+    const page = Number(params.page) || 1;
+    const limit = Number(params.limit) || 20;
+    const skip = (page - 1) * limit;
+
     const where: any = {};
     if (params.memberId) where.memberId = params.memberId;
     if (params.type) where.type = params.type;
@@ -20,11 +26,26 @@ export class FinancesService {
       if (params.endDate) where.date.lte = new Date(params.endDate);
     }
 
-    return this.prisma.contribution.findMany({
-      where,
-      include: { member: true },
-      orderBy: { date: 'desc' },
-    });
+    const [data, total] = await Promise.all([
+      this.prisma.contribution.findMany({
+        where,
+        skip,
+        take: limit,
+        include: { member: true },
+        orderBy: { date: 'desc' },
+      }),
+      this.prisma.contribution.count({ where }),
+    ]);
+
+    return {
+      data,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async recordContribution(data: any) {
@@ -33,9 +54,13 @@ export class FinancesService {
     });
   }
 
-  async getPledges(memberId?: string) {
+  async getPledges(params?: { memberId?: string; status?: string }) {
+    const where: any = {};
+    if (params?.memberId) where.memberId = params.memberId;
+    if (params?.status) where.status = params.status;
+
     return this.prisma.pledge.findMany({
-      where: memberId ? { memberId } : {},
+      where,
       include: { member: true },
       orderBy: { createdAt: 'desc' },
     });
@@ -56,7 +81,7 @@ export class FinancesService {
   }
 
   async getStatement(memberId: string, year?: number) {
-    const targetYear = year || new Date().getFullYear();
+    const targetYear = Number(year) || new Date().getFullYear();
     const startDate = new Date(targetYear, 0, 1);
     const endDate = new Date(targetYear, 11, 31);
 

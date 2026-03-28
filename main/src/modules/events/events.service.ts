@@ -5,7 +5,7 @@ import { PrismaService } from '../../database/prisma.service';
 export class EventsService {
   constructor(private prisma: PrismaService) {}
 
-  async findAll(params: { start?: string; end?: string; ministryId?: string }) {
+  async findAll(params: { start?: string; end?: string; ministryId?: string; category?: string }) {
     const where: any = {};
     if (params.start) {
       where.startDate = { gte: new Date(params.start) };
@@ -15,6 +15,9 @@ export class EventsService {
     }
     if (params.ministryId) {
       where.ministryId = params.ministryId;
+    }
+    if (params.category) {
+      where.category = params.category;
     }
     return this.prisma.event.findMany({
       where,

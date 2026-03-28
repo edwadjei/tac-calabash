@@ -84,8 +84,8 @@ export class FinancesController {
     description: 'List of pledges retrieved successfully',
     type: [PledgeResponse],
   })
-  getPledges(@Query('memberId') memberId?: string) {
-    return this.financesService.getPledges(memberId);
+  getPledges(@Query('memberId') memberId?: string, @Query('status') status?: string) {
+    return this.financesService.getPledges({ memberId, status });
   }
 
   @Post('pledges')
@@ -161,8 +161,8 @@ export class FinancesController {
   })
   getStatement(
     @Param('memberId', ParseUUIDPipe) memberId: string,
-    @Query('year') year?: number,
+    @Query('year') year?: string,
   ) {
-    return this.financesService.getStatement(memberId, year);
+    return this.financesService.getStatement(memberId, year ? Number(year) : undefined);
   }
 }

@@ -5,20 +5,22 @@ import { PrismaService } from '../../database/prisma.service';
 export class MembersService {
   constructor(private prisma: PrismaService) {}
 
-  async findAll(params: { page?: number; limit?: number; search?: string }) {
-    const page = params.page || 1;
-    const limit = params.limit || 20;
+  async findAll(params: { page?: number; limit?: number; search?: string; status?: string }) {
+    const page = Number(params.page) || 1;
+    const limit = Number(params.limit) || 20;
     const skip = (page - 1) * limit;
 
-    const where = params.search
-      ? {
-          OR: [
-            { firstName: { contains: params.search, mode: 'insensitive' as const } },
-            { lastName: { contains: params.search, mode: 'insensitive' as const } },
-            { email: { contains: params.search, mode: 'insensitive' as const } },
-          ],
-        }
-      : {};
+    const where: any = {};
+    if (params.status) {
+      where.membershipStatus = params.status;
+    }
+    if (params.search) {
+      where.OR = [
+        { firstName: { contains: params.search, mode: 'insensitive' as const } },
+        { lastName: { contains: params.search, mode: 'insensitive' as const } },
+        { email: { contains: params.search, mode: 'insensitive' as const } },
+      ];
+    }
 
     const [data, total] = await Promise.all([
       this.prisma.member.findMany({

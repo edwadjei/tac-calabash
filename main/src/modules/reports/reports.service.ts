@@ -82,7 +82,7 @@ export class ReportsService {
   }
 
   async getFinancialReport(year?: number) {
-    const targetYear = year || new Date().getFullYear();
+    const targetYear = Number(year) || new Date().getFullYear();
     const startDate = new Date(targetYear, 0, 1);
     const endDate = new Date(targetYear, 11, 31);
 
