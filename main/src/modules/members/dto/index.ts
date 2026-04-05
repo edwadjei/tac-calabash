@@ -1,12 +1,16 @@
 import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import {
-  IsString,
-  IsEmail,
-  IsOptional,
-  IsEnum,
+  ArrayUnique,
+  IsArray,
   IsBoolean,
-  IsUUID,
   IsDateString,
+  IsEmail,
+  IsEnum,
+  IsInt,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Min,
   MinLength,
 } from 'class-validator';
 
@@ -23,156 +27,283 @@ export enum MembershipStatus {
   TRANSFERRED = 'TRANSFERRED',
 }
 
+export enum MaritalStatus {
+  SINGLE = 'SINGLE',
+  MARRIED = 'MARRIED',
+  DIVORCED = 'DIVORCED',
+  WIDOWED = 'WIDOWED',
+}
+
 export class CreateMemberDto {
-  @ApiProperty({
-    description: 'Member first name',
-    example: 'John',
-  })
+  @ApiProperty({ example: 'John' })
   @IsString()
   @MinLength(1)
   firstName: string;
 
-  @ApiProperty({
-    description: 'Member last name',
-    example: 'Doe',
-  })
+  @ApiProperty({ example: 'Doe' })
   @IsString()
   @MinLength(1)
   lastName: string;
 
-  @ApiPropertyOptional({
-    description: 'Member middle name',
-    example: 'Michael',
-  })
+  @ApiPropertyOptional({ example: 'Michael' })
   @IsString()
   @IsOptional()
   middleName?: string;
 
-  @ApiPropertyOptional({
-    description: 'Email address',
-    example: 'john.doe@email.com',
-  })
+  @ApiPropertyOptional({ example: 'john.doe@email.com' })
   @IsEmail()
   @IsOptional()
   email?: string;
 
-  @ApiPropertyOptional({
-    description: 'Phone number',
-    example: '+233 24 123 4567',
-  })
+  @ApiPropertyOptional({ example: '+233 24 123 4567' })
   @IsString()
   @IsOptional()
   phone?: string;
 
-  @ApiPropertyOptional({
-    description: 'Date of birth (ISO 8601 format)',
-    example: '1990-05-15',
-  })
+  @ApiPropertyOptional({ example: '1990-05-15' })
   @IsDateString()
   @IsOptional()
   dateOfBirth?: string;
 
-  @ApiPropertyOptional({
-    description: 'Gender',
-    enum: Gender,
-    example: Gender.MALE,
-  })
+  @ApiPropertyOptional({ enum: Gender, example: Gender.MALE })
   @IsEnum(Gender)
   @IsOptional()
   gender?: Gender;
 
-  @ApiPropertyOptional({
-    description: 'Residential address',
-    example: '123 Main Street, Accra',
-  })
+  @ApiPropertyOptional({ example: '123 Main Street, Accra' })
   @IsString()
   @IsOptional()
   address?: string;
 
-  @ApiPropertyOptional({
-    description: 'City of residence',
-    example: 'Accra',
-  })
+  @ApiPropertyOptional({ example: 'Accra' })
   @IsString()
   @IsOptional()
   city?: string;
 
-  @ApiPropertyOptional({
-    description: 'Family ID to link member to a family',
-    example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
-  })
+  @ApiPropertyOptional({ example: 'https://example.com/profile.jpg' })
+  @IsString()
+  @IsOptional()
+  profileImage?: string;
+
+  @ApiPropertyOptional({ example: 'Ghanaian' })
+  @IsString()
+  @IsOptional()
+  nationality?: string;
+
+  @ApiPropertyOptional({ example: 'Koforidua' })
+  @IsString()
+  @IsOptional()
+  placeOfBirth?: string;
+
+  @ApiPropertyOptional({ example: 'Father Name' })
+  @IsString()
+  @IsOptional()
+  fatherName?: string;
+
+  @ApiPropertyOptional({ example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' })
   @IsUUID()
   @IsOptional()
-  familyId?: string;
+  fatherId?: string;
 
-  @ApiPropertyOptional({
-    description: 'Whether this member is the head of their family',
-    example: false,
-    default: false,
-  })
-  @IsBoolean()
+  @ApiPropertyOptional({ example: 'Mother Name' })
+  @IsString()
   @IsOptional()
-  isHeadOfFamily?: boolean;
+  motherName?: string;
 
-  @ApiPropertyOptional({
-    description: 'Emergency contact name',
-    example: 'Jane Doe',
-  })
+  @ApiPropertyOptional({ example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' })
+  @IsUUID()
+  @IsOptional()
+  motherId?: string;
+
+  @ApiPropertyOptional({ example: 'GA-123-4567' })
+  @IsString()
+  @IsOptional()
+  digitalAddress?: string;
+
+  @ApiPropertyOptional({ example: 'P.O. Box CT 123' })
+  @IsString()
+  @IsOptional()
+  postalAddress?: string;
+
+  @ApiPropertyOptional({ example: 'A12' })
+  @IsString()
+  @IsOptional()
+  hometownHouseNo?: string;
+
+  @ApiPropertyOptional({ example: 'P.O. Box 45' })
+  @IsString()
+  @IsOptional()
+  hometownPostalAddress?: string;
+
+  @ApiPropertyOptional({ example: 'Kumasi, Ashanti' })
+  @IsString()
+  @IsOptional()
+  hometownTownRegion?: string;
+
+  @ApiPropertyOptional({ example: '+233 20 000 0000' })
+  @IsString()
+  @IsOptional()
+  hometownPhone?: string;
+
+  @ApiPropertyOptional({ enum: MaritalStatus, example: MaritalStatus.MARRIED })
+  @IsEnum(MaritalStatus)
+  @IsOptional()
+  maritalStatus?: MaritalStatus;
+
+  @ApiPropertyOptional({ example: 'Spouse Name' })
+  @IsString()
+  @IsOptional()
+  spouseName?: string;
+
+  @ApiPropertyOptional({ example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' })
+  @IsUUID()
+  @IsOptional()
+  spouseId?: string;
+
+  @ApiPropertyOptional({ example: 2 })
+  @IsInt()
+  @Min(0)
+  @IsOptional()
+  numberOfChildren?: number;
+
+  @ApiPropertyOptional({ example: 'Trader' })
+  @IsString()
+  @IsOptional()
+  business?: string;
+
+  @ApiPropertyOptional({ example: 'Next of Kin' })
+  @IsString()
+  @IsOptional()
+  nextOfKinName?: string;
+
+  @ApiPropertyOptional({ example: 'Madina, Accra' })
+  @IsString()
+  @IsOptional()
+  nextOfKinAddress?: string;
+
+  @ApiPropertyOptional({ example: 'Accra, Greater Accra' })
+  @IsString()
+  @IsOptional()
+  nextOfKinCityRegion?: string;
+
+  @ApiPropertyOptional({ example: '+233 24 987 6543' })
+  @IsString()
+  @IsOptional()
+  nextOfKinPhone?: string;
+
+  @ApiPropertyOptional({ example: 'Brother' })
+  @IsString()
+  @IsOptional()
+  nextOfKinRelationship?: string;
+
+  @ApiPropertyOptional({ example: 'Jane Doe' })
   @IsString()
   @IsOptional()
   emergencyContact?: string;
 
-  @ApiPropertyOptional({
-    description: 'Emergency contact phone',
-    example: '+233 24 987 6543',
-  })
+  @ApiPropertyOptional({ example: '+233 24 987 6543' })
   @IsString()
   @IsOptional()
   emergencyPhone?: string;
-}
 
-export class UpdateMemberDto extends PartialType(CreateMemberDto) {
-  @ApiPropertyOptional({
-    description: 'Membership status',
-    enum: MembershipStatus,
-    example: MembershipStatus.ACTIVE,
-  })
-  @IsEnum(MembershipStatus)
+  @ApiPropertyOptional({ example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' })
+  @IsUUID()
   @IsOptional()
-  membershipStatus?: MembershipStatus;
+  familyId?: string;
 
-  @ApiPropertyOptional({
-    description: 'Date of baptism (ISO 8601 format)',
-    example: '2020-12-25',
-  })
+  @ApiPropertyOptional({ default: false })
+  @IsBoolean()
+  @IsOptional()
+  isHeadOfFamily?: boolean;
+
+  @ApiPropertyOptional({ example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' })
+  @IsUUID()
+  @IsOptional()
+  assemblyId?: string;
+
+  @ApiPropertyOptional({ example: '2020-12-25' })
   @IsDateString()
   @IsOptional()
   baptismDate?: string;
 
-  @ApiPropertyOptional({
-    description: 'Whether the member is baptized',
-    example: true,
-  })
-  @IsBoolean()
-  @IsOptional()
-  isBaptized?: boolean;
-
-  @ApiPropertyOptional({
-    description: 'Date member joined the church (ISO 8601 format)',
-    example: '2019-01-01',
-  })
+  @ApiPropertyOptional({ example: '2019-01-01' })
   @IsDateString()
   @IsOptional()
   membershipDate?: string;
 
-  @ApiPropertyOptional({
-    description: 'Additional notes about the member',
-    example: 'Active in youth ministry',
-  })
+  @ApiPropertyOptional({ example: true })
+  @IsBoolean()
+  @IsOptional()
+  isBaptized?: boolean;
+
+  @ApiPropertyOptional({ enum: MembershipStatus, example: MembershipStatus.ACTIVE })
+  @IsEnum(MembershipStatus)
+  @IsOptional()
+  membershipStatus?: MembershipStatus;
+
+  @ApiPropertyOptional({ example: 'Active in youth ministry' })
+  @IsString()
+  @IsOptional()
+  notes?: string;
+
+  @ApiPropertyOptional({ type: [String] })
+  @IsArray()
+  @ArrayUnique()
+  @IsUUID(undefined, { each: true })
+  @IsOptional()
+  ministryIds?: string[];
+
+  @ApiPropertyOptional({ type: [String] })
+  @IsArray()
+  @ArrayUnique()
+  @IsUUID(undefined, { each: true })
+  @IsOptional()
+  positionIds?: string[];
+
+  @ApiPropertyOptional({ example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' })
+  @IsUUID()
+  @IsOptional()
+  defaultPositionId?: string;
+}
+
+export class RegisterGuestDto {
+  @ApiProperty({ example: 'John' })
+  @IsString()
+  @MinLength(1)
+  firstName: string;
+
+  @ApiProperty({ example: 'Doe' })
+  @IsString()
+  @MinLength(1)
+  lastName: string;
+
+  @ApiPropertyOptional({ example: '+233 24 123 4567' })
+  @IsString()
+  @IsOptional()
+  phone?: string;
+
+  @ApiPropertyOptional({ example: 'john.doe@email.com' })
+  @IsEmail()
+  @IsOptional()
+  email?: string;
+
+  @ApiPropertyOptional({ enum: Gender, example: Gender.MALE })
+  @IsEnum(Gender)
+  @IsOptional()
+  gender?: Gender;
+
+  @ApiPropertyOptional({ example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' })
+  @IsUUID()
+  @IsOptional()
+  assemblyId?: string;
+
+  @ApiPropertyOptional({ example: 'Visiting from Kumasi' })
   @IsString()
   @IsOptional()
   notes?: string;
 }
+
+export class UpdateMemberDto extends PartialType(CreateMemberDto) {}
 
 export class MemberResponse {
   @ApiProperty({ example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' })
@@ -184,35 +315,11 @@ export class MemberResponse {
   @ApiProperty({ example: 'Doe' })
   lastName: string;
 
-  @ApiPropertyOptional({ example: 'Michael' })
-  middleName?: string;
-
-  @ApiPropertyOptional({ example: 'john.doe@email.com' })
-  email?: string;
-
-  @ApiPropertyOptional({ example: '+233 24 123 4567' })
-  phone?: string;
-
-  @ApiPropertyOptional({ example: '1990-05-15' })
-  dateOfBirth?: string;
-
-  @ApiPropertyOptional({ enum: Gender, example: Gender.MALE })
-  gender?: Gender;
-
-  @ApiPropertyOptional({ example: '123 Main Street, Accra' })
-  address?: string;
-
-  @ApiPropertyOptional({ example: 'Accra' })
-  city?: string;
-
   @ApiProperty({ enum: MembershipStatus, example: MembershipStatus.ACTIVE })
   membershipStatus: MembershipStatus;
 
   @ApiProperty({ example: false })
   isBaptized: boolean;
-
-  @ApiPropertyOptional({ example: '2020-12-25' })
-  baptismDate?: string;
 
   @ApiProperty({ example: '2024-01-15T10:30:00.000Z' })
   createdAt: string;
@@ -222,16 +329,16 @@ export class MemberResponse {
 }
 
 export class PaginationMeta {
-  @ApiProperty({ description: 'Total number of records', example: 150 })
+  @ApiProperty({ example: 150 })
   total: number;
 
-  @ApiProperty({ description: 'Current page number', example: 1 })
+  @ApiProperty({ example: 1 })
   page: number;
 
-  @ApiProperty({ description: 'Number of records per page', example: 20 })
+  @ApiProperty({ example: 20 })
   limit: number;
 
-  @ApiProperty({ description: 'Total number of pages', example: 8 })
+  @ApiProperty({ example: 8 })
   totalPages: number;
 }
 
@@ -244,44 +351,31 @@ export class PaginatedMembersResponse {
 }
 
 export class MemberQueryDto {
-  @ApiPropertyOptional({
-    description: 'Page number (1-based)',
-    example: 1,
-    default: 1,
-  })
+  @ApiPropertyOptional({ example: 1, default: 1 })
   @IsOptional()
   page?: number;
 
-  @ApiPropertyOptional({
-    description: 'Number of records per page',
-    example: 20,
-    default: 20,
-  })
+  @ApiPropertyOptional({ example: 20, default: 20 })
   @IsOptional()
   limit?: number;
 
-  @ApiPropertyOptional({
-    description: 'Search term (searches first name, last name, email)',
-    example: 'john',
-  })
+  @ApiPropertyOptional({ example: 'john' })
   @IsString()
   @IsOptional()
   search?: string;
 
-  @ApiPropertyOptional({
-    description: 'Filter by membership status',
-    enum: MembershipStatus,
-    example: MembershipStatus.ACTIVE,
-  })
+  @ApiPropertyOptional({ enum: MembershipStatus, example: MembershipStatus.ACTIVE })
   @IsEnum(MembershipStatus)
   @IsOptional()
   status?: MembershipStatus;
 
-  @ApiPropertyOptional({
-    description: 'Filter by ministry ID',
-    example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
-  })
+  @ApiPropertyOptional({ example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' })
   @IsUUID()
   @IsOptional()
   ministryId?: string;
+
+  @ApiPropertyOptional({ example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' })
+  @IsUUID()
+  @IsOptional()
+  assemblyId?: string;
 }

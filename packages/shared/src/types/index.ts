@@ -1,4 +1,5 @@
 export * from './member';
+export * from './church-structure';
 export * from './ministry';
 export * from './event';
 export * from './finance';

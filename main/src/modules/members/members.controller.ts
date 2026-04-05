@@ -16,7 +16,9 @@ import {
   MemberResponse,
   PaginatedMembersResponse,
   MemberQueryDto,
+  RegisterGuestDto,
 } from './dto';
+import { CurrentUser } from '../../common/decorators/current-user.decorator';
 
 @ApiTags('Members')
 @ApiBearerAuth('access-token')
@@ -45,6 +47,15 @@ export class MembersController {
   })
   findAll(@Query() query: MemberQueryDto) {
     return this.membersService.findAll(query);
+  }
+
+  @Get('search')
+  @ApiOperation({
+    summary: 'Search members',
+    description: 'Lightweight member search for autocomplete fields such as father, mother, and spouse links.',
+  })
+  search(@Query('query') query?: string) {
+    return this.membersService.searchMembers(query);
   }
 
   @Get(':id')
@@ -96,8 +107,17 @@ export class MembersController {
       },
     },
   })
-  create(@Body() createMemberDto: CreateMemberDto) {
-    return this.membersService.create(createMemberDto);
+  create(@Body() createMemberDto: CreateMemberDto, @CurrentUser() user?: { email?: string }) {
+    return this.membersService.create(createMemberDto as unknown as Record<string, unknown>, user);
+  }
+
+  @Post('guest')
+  @ApiOperation({
+    summary: 'Register guest',
+    description: 'Create a visitor record with a simplified payload.',
+  })
+  registerGuest(@Body() dto: RegisterGuestDto, @CurrentUser() user?: { email?: string }) {
+    return this.membersService.registerGuest(dto as unknown as Record<string, unknown>, user);
   }
 
   @Patch(':id')
@@ -125,7 +145,16 @@ export class MembersController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateMemberDto: UpdateMemberDto,
   ) {
-    return this.membersService.update(id, updateMemberDto);
+    return this.membersService.update(id, updateMemberDto as unknown as Record<string, unknown>);
+  }
+
+  @Patch(':id/convert')
+  @ApiOperation({
+    summary: 'Convert guest to member',
+    description: 'Promote a VISITOR record to a full ACTIVE member.',
+  })
+  convertGuest(@Param('id', ParseUUIDPipe) id: string) {
+    return this.membersService.convertGuestToMember(id);
   }
 
   @Delete(':id')

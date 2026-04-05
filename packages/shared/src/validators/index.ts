@@ -11,11 +11,77 @@ export const createMemberSchema = z.object({
   middleName: z.string().optional(),
   email: z.string().email('Invalid email address').optional().or(z.literal('')),
   phone: z.string().optional(),
-  dateOfBirth: z.string().min(1, 'Date of birth is required'),
+  dateOfBirth: z.string().optional(),
   gender: z.enum(['MALE', 'FEMALE']).optional(),
   address: z.string().optional(),
   city: z.string().optional(),
+  profileImage: z.string().optional(),
   familyId: z.string().uuid().optional(),
+  isHeadOfFamily: z.boolean().optional(),
+  assemblyId: z.string().uuid().optional(),
+  nationality: z.string().optional(),
+  placeOfBirth: z.string().optional(),
+  fatherName: z.string().optional(),
+  fatherId: z.string().uuid().optional(),
+  motherName: z.string().optional(),
+  motherId: z.string().uuid().optional(),
+  digitalAddress: z.string().optional(),
+  postalAddress: z.string().optional(),
+  hometownHouseNo: z.string().optional(),
+  hometownPostalAddress: z.string().optional(),
+  hometownTownRegion: z.string().optional(),
+  hometownPhone: z.string().optional(),
+  maritalStatus: z.enum(['SINGLE', 'MARRIED', 'DIVORCED', 'WIDOWED']).optional(),
+  spouseName: z.string().optional(),
+  spouseId: z.string().uuid().optional(),
+  numberOfChildren: z.number().int().min(0).optional(),
+  business: z.string().optional(),
+  nextOfKinName: z.string().optional(),
+  nextOfKinAddress: z.string().optional(),
+  nextOfKinCityRegion: z.string().optional(),
+  nextOfKinPhone: z.string().optional(),
+  nextOfKinRelationship: z.string().optional(),
+  emergencyContact: z.string().optional(),
+  emergencyPhone: z.string().optional(),
+  notes: z.string().optional(),
+  baptismDate: z.string().optional(),
+  membershipDate: z.string().optional(),
+  isBaptized: z.boolean().optional(),
+  membershipStatus: z.enum(['ACTIVE', 'INACTIVE', 'VISITOR', 'DECEASED', 'TRANSFERRED']).optional(),
+  ministryIds: z.array(z.string().uuid()).optional(),
+  positionIds: z.array(z.string().uuid()).optional(),
+  defaultPositionId: z.string().uuid().optional(),
+});
+
+export const registerGuestSchema = z.object({
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  phone: z.string().optional(),
+  email: z.string().email('Invalid email address').optional().or(z.literal('')),
+  gender: z.enum(['MALE', 'FEMALE']).optional(),
+  assemblyId: z.string().uuid().optional(),
+  notes: z.string().optional(),
+});
+
+export const createDistrictSchema = z.object({
+  name: z.string().min(1, 'District name is required'),
+  headquarterAssemblyId: z.string().uuid().optional(),
+});
+
+export const createCircuitSchema = z.object({
+  name: z.string().min(1, 'Circuit name is required'),
+  districtId: z.string().uuid('District is required'),
+  headquarterAssemblyId: z.string().uuid().optional(),
+});
+
+export const createAssemblySchema = z.object({
+  name: z.string().min(1, 'Assembly name is required'),
+  circuitId: z.string().uuid('Circuit is required'),
+});
+
+export const createPositionSchema = z.object({
+  name: z.string().min(1, 'Position name is required'),
+  description: z.string().optional(),
 });
 
 export const createMinistrySchema = z.object({
@@ -92,6 +158,11 @@ export const createFinJournalEntrySchema = z.object({
 
 export type LoginInput = z.infer<typeof loginSchema>;
 export type CreateMemberInput = z.infer<typeof createMemberSchema>;
+export type RegisterGuestInput = z.infer<typeof registerGuestSchema>;
+export type CreateDistrictInput = z.infer<typeof createDistrictSchema>;
+export type CreateCircuitInput = z.infer<typeof createCircuitSchema>;
+export type CreateAssemblyInput = z.infer<typeof createAssemblySchema>;
+export type CreatePositionInput = z.infer<typeof createPositionSchema>;
 export type CreateMinistryInput = z.infer<typeof createMinistrySchema>;
 export type CreateEventInput = z.infer<typeof createEventSchema>;
 export type CreateContributionInput = z.infer<typeof createContributionSchema>;

@@ -14,6 +14,7 @@ import { FinancesModule } from './modules/finances/finances.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { FollowUpModule } from './modules/follow-up/follow-up.module';
+import { ChurchStructureModule } from './modules/church-structure/church-structure.module';
 
 // Database
 import { DatabaseModule } from './database/database.module';
@@ -51,6 +52,7 @@ import { DatabaseModule } from './database/database.module';
     NotificationsModule,
     ReportsModule,
     FollowUpModule,
+    ChurchStructureModule,
   ],
 })
 export class AppModule {}

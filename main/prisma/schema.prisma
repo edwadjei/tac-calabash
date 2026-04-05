@@ -48,34 +48,70 @@ enum Role {
 // ============================================
 
 model Member {
-  id              String       @id @default(uuid())
-  firstName       String
-  lastName        String
-  middleName      String?
-  email           String?      @unique
-  phone           String?
-  dateOfBirth     DateTime?
-  gender          Gender?
-  address         String?
-  city            String?
-  profileImage    String?
-  membershipDate  DateTime?
-  membershipStatus MembershipStatus @default(ACTIVE)
-  baptismDate     DateTime?
-  isBaptized      Boolean      @default(false)
-  emergencyContact String?
-  emergencyPhone  String?
-  notes           String?
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+  id                     String           @id @default(uuid())
+  firstName              String
+  lastName               String
+  middleName             String?
+  email                  String?          @unique
+  phone                  String?
+  dateOfBirth            DateTime?
+  gender                 Gender?
+  address                String?
+  city                   String?
+  profileImage           String?
+  membershipDate         DateTime?
+  membershipStatus       MembershipStatus @default(ACTIVE)
+  baptismDate            DateTime?
+  isBaptized             Boolean          @default(false)
+  emergencyContact       String?
+  emergencyPhone         String?
+  notes                  String?
+  assemblyId             String?
+  nationality            String?
+  placeOfBirth           String?
+  fatherName             String?
+  fatherId               String?
+  motherName             String?
+  motherId               String?
+  digitalAddress         String?
+  postalAddress          String?
+  hometownHouseNo        String?
+  hometownPostalAddress  String?
+  hometownTownRegion     String?
+  hometownPhone          String?
+  maritalStatus          MaritalStatus?
+  spouseName             String?
+  spouseId               String?
+  numberOfChildren       Int?
+  business               String?
+  nextOfKinName          String?
+  nextOfKinAddress       String?
+  nextOfKinCityRegion    String?
+  nextOfKinPhone         String?
+  nextOfKinRelationship  String?
+  recordedBy             String?
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
 
   // Family relationship
   familyId  String?
   family    Family?  @relation(fields: [familyId], references: [id])
   isHeadOfFamily Boolean @default(false)
 
+  // Church structure
+  assembly Assembly? @relation(fields: [assemblyId], references: [id])
+
+  // Linked relations to other members
+  father   Member?  @relation("FatherChild", fields: [fatherId], references: [id])
+  fatherOf Member[] @relation("FatherChild")
+  mother   Member?  @relation("MotherChild", fields: [motherId], references: [id])
+  motherOf Member[] @relation("MotherChild")
+  spouse   Member?  @relation("Spouse", fields: [spouseId], references: [id])
+  spouseOf Member[] @relation("Spouse")
+
   // Relations
   ministryMemberships MinistryMember[]
+  positions           MemberPosition[]
   attendances         Attendance[]
   contributions       Contribution[]
   pledges             Pledge[]
@@ -107,6 +143,91 @@ enum MembershipStatus {
   VISITOR
   DECEASED
   TRANSFERRED
+}
+
+enum MaritalStatus {
+  SINGLE
+  MARRIED
+  DIVORCED
+  WIDOWED
+}
+
+// ============================================
+// CHURCH STRUCTURE
+// ============================================
+
+model District {
+  id                   String    @id @default(uuid())
+  name                 String    @unique
+  headquarterAssemblyId String?  @unique
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  circuits            Circuit[]
+  headquarterAssembly Assembly? @relation("DistrictHeadquarters", fields: [headquarterAssemblyId], references: [id])
+
+  @@map("districts")
+}
+
+model Circuit {
+  id                   String    @id @default(uuid())
+  name                 String
+  districtId           String
+  headquarterAssemblyId String?  @unique
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  district            District   @relation(fields: [districtId], references: [id], onDelete: Cascade)
+  assemblies          Assembly[]
+  headquarterAssembly Assembly?  @relation("CircuitHeadquarters", fields: [headquarterAssemblyId], references: [id])
+
+  @@unique([name, districtId])
+  @@map("circuits")
+}
+
+model Assembly {
+  id        String   @id @default(uuid())
+  name      String
+  circuitId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  circuit                  Circuit   @relation(fields: [circuitId], references: [id], onDelete: Cascade)
+  members                  Member[]
+  districtHeadquartersFor  District? @relation("DistrictHeadquarters")
+  circuitHeadquartersFor   Circuit?  @relation("CircuitHeadquarters")
+
+  @@unique([name, circuitId])
+  @@map("assemblies")
+}
+
+model Position {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members MemberPosition[]
+
+  @@map("positions")
+}
+
+model MemberPosition {
+  id         String   @id @default(uuid())
+  memberId   String
+  positionId String
+  isDefault  Boolean  @default(false)
+  startDate  DateTime @default(now())
+  endDate    DateTime?
+  isActive   Boolean  @default(true)
+
+  member   Member   @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  position Position @relation(fields: [positionId], references: [id], onDelete: Cascade)
+
+  @@unique([memberId, positionId])
+  @@map("member_positions")
 }
 
 // ============================================

@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Plus, Phone, Mail } from 'lucide-react';
+import { Plus, Phone, Mail, UserRoundPlus } from 'lucide-react';
 import { PageHeader } from '@/components/layout/page-header';
 import { DataTable } from '@/components/shared/data-table';
 import { SearchInput } from '@/components/shared/search-input';
@@ -11,21 +11,25 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useMembers } from '@/hooks/use-members';
+import { useAssemblies } from '@/hooks/use-church-structure';
 import { getInitials, formatDate } from '@tac/shared';
-import { MemberFormDialog } from './member-form-dialog';
+import { GuestFormDialog } from './components/guest-form-dialog';
 
 export default function MembersPage() {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState<string>('all');
-  const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [assemblyId, setAssemblyId] = useState<string>('all');
+  const [showGuestDialog, setShowGuestDialog] = useState(false);
+  const { data: assemblies = [] } = useAssemblies();
 
   const { data, isLoading } = useMembers({
     page,
     limit: 10,
     search: search || undefined,
     status: status !== 'all' ? status : undefined,
+    assemblyId: assemblyId !== 'all' ? assemblyId : undefined,
   });
 
   const handleSearch = useCallback((value: string) => {
@@ -78,6 +82,18 @@ export default function MembersPage() {
       cell: (row: any) => <StatusBadge status={row.membershipStatus || 'ACTIVE'} />,
     },
     {
+      key: 'assembly',
+      header: 'Assembly',
+      cell: (row: any) => (
+        <div className="text-sm">
+          <p>{row.assembly?.name || '—'}</p>
+          <p className="text-xs text-muted-foreground">
+            {row.assembly?.circuit?.district?.name || row.assembly?.circuit?.name || ''}
+          </p>
+        </div>
+      ),
+    },
+    {
       key: 'joined',
       header: 'Joined',
       cell: (row: any) => (
@@ -94,7 +110,11 @@ export default function MembersPage() {
         title="Members"
         description="Manage your church members and their information."
       >
-        <Button onClick={() => setShowCreateDialog(true)}>
+        <Button variant="outline" onClick={() => setShowGuestDialog(true)}>
+          <UserRoundPlus className="h-4 w-4 mr-2" />
+          Register Guest
+        </Button>
+        <Button onClick={() => router.push('/members/new')}>
           <Plus className="h-4 w-4 mr-2" />
           Add Member
         </Button>
@@ -121,6 +141,19 @@ export default function MembersPage() {
             <SelectItem value="TRANSFERRED">Transferred</SelectItem>
           </SelectContent>
         </Select>
+        <Select value={assemblyId} onValueChange={(value) => { setAssemblyId(value); setPage(1); }}>
+          <SelectTrigger className="w-[220px]">
+            <SelectValue placeholder="All assemblies" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Assemblies</SelectItem>
+            {assemblies.map((assembly) => (
+              <SelectItem key={assembly.id} value={assembly.id}>
+                {assembly.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Data Table */}
@@ -135,10 +168,10 @@ export default function MembersPage() {
         emptyMessage="No members found. Add your first member to get started."
       />
 
-      {/* Create Dialog */}
-      <MemberFormDialog
-        open={showCreateDialog}
-        onOpenChange={setShowCreateDialog}
+      <GuestFormDialog
+        open={showGuestDialog}
+        onOpenChange={setShowGuestDialog}
+        onSuccess={(memberId) => router.push(`/members/${memberId}/edit`)}
       />
     </div>
   );

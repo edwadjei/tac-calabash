@@ -8,6 +8,11 @@ export * from './constants';
 export {
   loginSchema,
   createMemberSchema,
+  registerGuestSchema,
+  createDistrictSchema,
+  createCircuitSchema,
+  createAssemblySchema,
+  createPositionSchema,
   createMinistrySchema,
   createEventSchema,
   createContributionSchema,

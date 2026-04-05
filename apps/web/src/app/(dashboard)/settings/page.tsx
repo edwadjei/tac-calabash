@@ -14,6 +14,7 @@ import { useUsers, useDeleteUser } from '@/hooks/use-users';
 import { formatDate } from '@tac/shared';
 import { toast } from 'sonner';
 import { UserFormDialog } from './user-form-dialog';
+import { ChurchStructurePanel } from './church-structure-panel';
 
 const ROLE_LABELS: Record<string, string> = {
   SUPER_ADMIN: 'Super Admin',
@@ -52,6 +53,9 @@ export default function SettingsPage() {
           </TabsTrigger>
           <TabsTrigger value="general" className="gap-1.5">
             <Key className="h-4 w-4" /> General
+          </TabsTrigger>
+          <TabsTrigger value="church-structure" className="gap-1.5">
+            <Plus className="h-4 w-4" /> Church Structure
           </TabsTrigger>
         </TabsList>
 
@@ -139,6 +143,10 @@ export default function SettingsPage() {
               Contact the system administrator to update church information.
             </p>
           </div>
+        </TabsContent>
+
+        <TabsContent value="church-structure">
+          <ChurchStructurePanel />
         </TabsContent>
       </Tabs>
 

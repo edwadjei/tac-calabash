@@ -16,6 +16,7 @@ export interface MinistryMember {
   joinedAt: string;
   leftAt?: string;
   isActive: boolean;
+  ministry?: Ministry;
 }
 
 export type MinistryRole = 'LEADER' | 'ASSISTANT_LEADER' | 'SECRETARY' | 'TREASURER' | 'MEMBER';
