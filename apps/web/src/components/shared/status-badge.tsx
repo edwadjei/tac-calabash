@@ -11,6 +11,14 @@ const STATUS_STYLES: Record<string, string> = {
   COMPLETED: 'bg-green-50 text-green-700',
   CANCELLED: 'bg-gray-100 text-gray-500',
   OVERDUE: 'bg-red-50 text-red-700',
+  // Accounting
+  DRAFT: 'bg-yellow-50 text-yellow-700',
+  POSTED: 'bg-green-50 text-green-700',
+  ASSET: 'bg-blue-50 text-blue-700',
+  LIABILITY: 'bg-red-50 text-red-700',
+  EQUITY: 'bg-purple-50 text-purple-700',
+  INCOME: 'bg-green-50 text-green-700',
+  EXPENSE: 'bg-orange-50 text-orange-700',
 };
 
 interface StatusBadgeProps {

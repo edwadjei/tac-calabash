@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createContributionSchema, type CreateContributionInput } from '@tac/shared';
+import { createContributionSchema, type CreateContributionInput, amountToCents } from '@tac/shared';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -46,7 +46,7 @@ export function ContributionFormDialog({ open, onOpenChange }: ContributionFormD
 
   const onSubmit = async (data: CreateContributionInput) => {
     try {
-      await createContribution.mutateAsync(data);
+      await createContribution.mutateAsync({ ...data, amount: amountToCents(data.amount) });
       toast.success('Contribution recorded successfully');
       onOpenChange(false);
       reset();
@@ -70,14 +70,14 @@ export function ContributionFormDialog({ open, onOpenChange }: ContributionFormD
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label>Member *</Label>
-            <Select value={memberIdValue} onValueChange={(v) => setValue('memberId', v)}>
+            <Select value={memberIdValue} onValueChange={(value) => setValue('memberId', value)}>
               <SelectTrigger>
                 <SelectValue placeholder="Select a member" />
               </SelectTrigger>
               <SelectContent>
-                {members.map((m: any) => (
-                  <SelectItem key={m.id} value={m.id}>
-                    {getFullName(m.firstName, m.lastName)}
+                {members.map((member: any) => (
+                  <SelectItem key={member.id} value={member.id}>
+                    {getFullName(member.firstName, member.lastName)}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -99,7 +99,7 @@ export function ContributionFormDialog({ open, onOpenChange }: ContributionFormD
             </div>
             <div className="space-y-2">
               <Label>Type *</Label>
-              <Select value={typeValue} onValueChange={(v) => setValue('type', v as any)}>
+              <Select value={typeValue} onValueChange={(value) => setValue('type', value as any)}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -122,7 +122,7 @@ export function ContributionFormDialog({ open, onOpenChange }: ContributionFormD
             </div>
             <div className="space-y-2">
               <Label>Payment Method</Label>
-              <Select value={methodValue} onValueChange={(v) => setValue('method', v as any)}>
+              <Select value={methodValue} onValueChange={(value) => setValue('method', value as any)}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -148,9 +148,11 @@ export function ContributionFormDialog({ open, onOpenChange }: ContributionFormD
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+              Cancel
+            </Button>
             <Button type="submit" disabled={createContribution.isPending}>
-              {createContribution.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+              {createContribution.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Record
             </Button>
           </DialogFooter>

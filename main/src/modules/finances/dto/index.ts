@@ -1,5 +1,14 @@
 import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import { IsString, IsOptional, IsEnum, IsUUID, IsNumber, IsDateString, IsPositive, Min } from 'class-validator';
+import {
+  IsBoolean,
+  IsInt,
+  IsObject,
+  IsArray,
+  ArrayMinSize,
+  ValidateNested,
+} from 'class-validator';
+import { Type, Transform } from 'class-transformer';
 
 export enum ContributionType {
   TITHE = 'TITHE',
@@ -307,4 +316,183 @@ export class GivingStatementResponse {
 
   @ApiProperty({ type: ContributionSummary })
   summary: ContributionSummary;
+}
+
+export enum FinAccountType {
+  ASSET = 'ASSET',
+  LIABILITY = 'LIABILITY',
+  EQUITY = 'EQUITY',
+  INCOME = 'INCOME',
+  EXPENSE = 'EXPENSE',
+}
+
+export enum FinJournalEntryStatus {
+  DRAFT = 'DRAFT',
+  POSTED = 'POSTED',
+}
+
+export class CreateFinAccountDto {
+  @ApiProperty({ description: 'Account name', example: 'Cash' })
+  @IsString()
+  name: string;
+
+  @ApiPropertyOptional({ description: 'Account description', example: 'Main cash account' })
+  @IsString()
+  @IsOptional()
+  description?: string;
+
+  @ApiProperty({ description: 'Account type', enum: FinAccountType, example: FinAccountType.ASSET })
+  @IsEnum(FinAccountType)
+  accountType: FinAccountType;
+
+  @ApiPropertyOptional({ description: 'Whether this is a group (parent) account', default: false })
+  @IsBoolean()
+  @IsOptional()
+  isGroup?: boolean;
+
+  @ApiPropertyOptional({ description: 'Whether this is a contra account', default: false })
+  @IsBoolean()
+  @IsOptional()
+  isContra?: boolean;
+
+  @ApiPropertyOptional({ description: 'Parent account ID (must be a group account)' })
+  @IsUUID()
+  @IsOptional()
+  parentAccountId?: string;
+}
+
+export class UpdateFinAccountDto {
+  @ApiPropertyOptional({ description: 'Account name', example: 'Petty Cash' })
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @ApiPropertyOptional({ description: 'Account description' })
+  @IsString()
+  @IsOptional()
+  description?: string;
+}
+
+export class FinAccountQueryDto {
+  @ApiPropertyOptional({ description: 'Filter by account type', enum: FinAccountType })
+  @IsEnum(FinAccountType)
+  @IsOptional()
+  accountType?: FinAccountType;
+
+  @ApiPropertyOptional({ description: 'Filter by group accounts only' })
+  @IsOptional()
+  @Transform(({ value }) => value === 'true' || value === true)
+  isGroup?: boolean;
+
+  @ApiPropertyOptional({ description: 'Filter by contra accounts only' })
+  @IsOptional()
+  @Transform(({ value }) => value === 'true' || value === true)
+  isContra?: boolean;
+
+  @ApiPropertyOptional({ description: 'Filter by parent account ID' })
+  @IsUUID()
+  @IsOptional()
+  parentAccountId?: string;
+}
+
+export class CreateFinJournalEntryLineDto {
+  @ApiProperty({ description: 'Account ID', example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' })
+  @IsUUID()
+  accountId: string;
+
+  @ApiProperty({ description: 'Debit amount in cents (pesewas)', example: 50000, minimum: 0 })
+  @IsInt()
+  @Min(0)
+  debit: number;
+
+  @ApiProperty({ description: 'Credit amount in cents (pesewas)', example: 0, minimum: 0 })
+  @IsInt()
+  @Min(0)
+  credit: number;
+
+  @ApiPropertyOptional({ description: 'Line notes', example: 'Cash received for sale' })
+  @IsString()
+  @IsOptional()
+  notes?: string;
+}
+
+export class CreateFinJournalEntryDto {
+  @ApiPropertyOptional({ description: 'Transaction reference', example: 'SALE-001' })
+  @IsString()
+  @IsOptional()
+  reference?: string;
+
+  @ApiProperty({ description: 'Transaction date (ISO 8601)', example: '2024-01-15' })
+  @IsDateString()
+  transactionDate: string;
+
+  @ApiPropertyOptional({ description: 'Additional metadata' })
+  @IsObject()
+  @IsOptional()
+  metadata?: Record<string, unknown>;
+
+  @ApiProperty({
+    description: 'Journal entry lines (minimum 2, debits must equal credits)',
+    type: [CreateFinJournalEntryLineDto],
+  })
+  @IsArray()
+  @ArrayMinSize(2, { message: 'A journal entry must have at least 2 lines' })
+  @ValidateNested({ each: true })
+  @Type(() => CreateFinJournalEntryLineDto)
+  lines: CreateFinJournalEntryLineDto[];
+}
+
+export class UpdateFinJournalEntryDto {
+  @ApiPropertyOptional({ description: 'Transaction reference' })
+  @IsString()
+  @IsOptional()
+  reference?: string;
+
+  @ApiPropertyOptional({ description: 'Transaction date (ISO 8601)' })
+  @IsDateString()
+  @IsOptional()
+  transactionDate?: string;
+
+  @ApiPropertyOptional({ description: 'Additional metadata' })
+  @IsObject()
+  @IsOptional()
+  metadata?: Record<string, unknown>;
+
+  @ApiPropertyOptional({
+    description: 'Replace all lines (minimum 2, debits must equal credits)',
+    type: [CreateFinJournalEntryLineDto],
+  })
+  @IsArray()
+  @ArrayMinSize(2, { message: 'A journal entry must have at least 2 lines' })
+  @ValidateNested({ each: true })
+  @Type(() => CreateFinJournalEntryLineDto)
+  @IsOptional()
+  lines?: CreateFinJournalEntryLineDto[];
+}
+
+export class FinJournalEntryQueryDto {
+  @ApiPropertyOptional({ description: 'Filter by status', enum: FinJournalEntryStatus })
+  @IsEnum(FinJournalEntryStatus)
+  @IsOptional()
+  status?: FinJournalEntryStatus;
+
+  @ApiPropertyOptional({ description: 'Page number', example: 1 })
+  @IsOptional()
+  @Transform(({ value }) => parseInt(value))
+  page?: number;
+
+  @ApiPropertyOptional({ description: 'Items per page', example: 20 })
+  @IsOptional()
+  @Transform(({ value }) => parseInt(value))
+  limit?: number;
+
+  @ApiPropertyOptional({ description: 'Start date filter (ISO 8601)' })
+  @IsDateString()
+  @IsOptional()
+  startDate?: string;
+
+  @ApiPropertyOptional({ description: 'End date filter (ISO 8601)' })
+  @IsDateString()
+  @IsOptional()
+  endDate?: string;
 }

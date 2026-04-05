@@ -92,7 +92,7 @@ All error responses follow a consistent format:
     .addTag('Ministries', 'Ministry groups and member assignments')
     .addTag('Attendance', 'Service attendance tracking and records')
     .addTag('Events', 'Church events and calendar management')
-    .addTag('Finances', 'Tithes, offerings, pledges, and financial statements')
+    .addTag('Finances', 'Unified finances module for contributions, pledges, chart of accounts, journal entries, and statements')
     .addTag('Notifications', 'Announcements and push notifications')
     .addTag('Follow-Up', 'Pastoral care and visitor follow-up tracking')
     .addTag('Reports', 'Dashboard analytics and report generation')

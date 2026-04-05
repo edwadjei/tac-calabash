@@ -22,6 +22,27 @@ export function formatCurrency(amount: number, currency = 'GHS'): string {
 }
 
 /**
+ * Convert cents (pesewas) to the main currency unit
+ */
+export function centsToAmount(cents: number): number {
+  return cents / 100;
+}
+
+/**
+ * Convert a currency amount to cents (pesewas)
+ */
+export function amountToCents(amount: number): number {
+  return Math.round(amount * 100);
+}
+
+/**
+ * Format an amount stored in cents as a currency string
+ */
+export function formatCentsAsCurrency(cents: number, currency = 'GHS'): string {
+  return formatCurrency(cents / 100, currency);
+}
+
+/**
  * Get full name from first and last name
  */
 export function getFullName(firstName: string, lastName: string, middleName?: string): string {

@@ -225,17 +225,19 @@ enum EventCategory {
 model Contribution {
   id          String           @id @default(uuid())
   memberId    String
-  amount      Decimal          @db.Decimal(10, 2)
+  amount      Int
   type        ContributionType
   category    String?
   date        DateTime
   method      PaymentMethod    @default(CASH)
   reference   String?
   notes       String?
+  journalEntryId String?       @unique
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
 
-  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  member       Member          @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  journalEntry FinJournalEntry? @relation(fields: [journalEntryId], references: [id])
 
   @@map("contributions")
 }
@@ -243,12 +245,12 @@ model Contribution {
 model Pledge {
   id           String       @id @default(uuid())
   memberId     String
-  amount       Decimal      @db.Decimal(10, 2)
+  amount       Int
   purpose      String
   startDate    DateTime
   endDate      DateTime?
   frequency    PledgeFrequency
-  amountPaid   Decimal      @default(0) @db.Decimal(10, 2)
+  amountPaid   Int          @default(0)
   status       PledgeStatus @default(ACTIVE)
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
@@ -286,6 +288,72 @@ enum PledgeStatus {
   ACTIVE
   COMPLETED
   CANCELLED
+}
+
+// ============================================
+// ACCOUNTING (Double-Entry Bookkeeping)
+// ============================================
+
+enum FinAccountType {
+  ASSET
+  LIABILITY
+  EQUITY
+  INCOME
+  EXPENSE
+}
+
+enum FinJournalEntryStatus {
+  DRAFT
+  POSTED
+}
+
+model FinAccount {
+  id              String         @id @default(uuid())
+  code            String         @unique
+  name            String
+  description     String?
+  accountType     FinAccountType
+  isGroup         Boolean        @default(false)
+  isContra        Boolean        @default(false)
+  parentAccountId String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  parentAccount FinAccount?           @relation("FinAccountHierarchy", fields: [parentAccountId], references: [id])
+  childAccounts FinAccount[]          @relation("FinAccountHierarchy")
+  journalLines  FinJournalEntryLine[]
+
+  @@map("fin_accounts")
+}
+
+model FinJournalEntry {
+  id              String                @id @default(uuid())
+  status          FinJournalEntryStatus @default(DRAFT)
+  reference       String?
+  transactionDate DateTime
+  metadata        Json?
+  postedAt        DateTime?
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  lines        FinJournalEntryLine[]
+  contribution Contribution?
+
+  @@map("fin_journal_entries")
+}
+
+model FinJournalEntryLine {
+  id             String  @id @default(uuid())
+  journalEntryId String
+  accountId      String
+  debit          Int     @default(0)
+  credit         Int     @default(0)
+  notes          String?
+
+  journalEntry FinJournalEntry @relation(fields: [journalEntryId], references: [id], onDelete: Cascade)
+  account      FinAccount      @relation(fields: [accountId], references: [id])
+
+  @@map("fin_journal_entry_lines")
 }
 
 // ============================================

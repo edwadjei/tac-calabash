@@ -63,9 +63,39 @@ export const createPledgeSchema = z.object({
   frequency: z.enum(['ONE_TIME', 'WEEKLY', 'MONTHLY', 'QUARTERLY', 'ANNUALLY']),
 });
 
+// ============================================
+// ACCOUNTING SCHEMAS
+// ============================================
+
+export const createFinAccountSchema = z.object({
+  name: z.string().min(1, 'Account name is required'),
+  description: z.string().optional(),
+  accountType: z.enum(['ASSET', 'LIABILITY', 'EQUITY', 'INCOME', 'EXPENSE']),
+  isGroup: z.boolean().default(false),
+  isContra: z.boolean().default(false),
+  parentAccountId: z.string().uuid().optional(),
+});
+
+export const createFinJournalEntryLineSchema = z.object({
+  accountId: z.string().uuid('Invalid account ID'),
+  debit: z.number().int().min(0, 'Debit must be >= 0'),
+  credit: z.number().int().min(0, 'Credit must be >= 0'),
+  notes: z.string().optional(),
+});
+
+export const createFinJournalEntrySchema = z.object({
+  reference: z.string().optional(),
+  transactionDate: z.string().min(1, 'Transaction date is required'),
+  metadata: z.record(z.unknown()).optional(),
+  lines: z.array(createFinJournalEntryLineSchema).min(2, 'At least 2 lines required'),
+});
+
 export type LoginInput = z.infer<typeof loginSchema>;
 export type CreateMemberInput = z.infer<typeof createMemberSchema>;
 export type CreateMinistryInput = z.infer<typeof createMinistrySchema>;
 export type CreateEventInput = z.infer<typeof createEventSchema>;
 export type CreateContributionInput = z.infer<typeof createContributionSchema>;
 export type CreatePledgeInput = z.infer<typeof createPledgeSchema>;
+export type CreateFinAccountInput = z.infer<typeof createFinAccountSchema>;
+export type CreateFinJournalEntryLineInput = z.infer<typeof createFinJournalEntryLineSchema>;
+export type CreateFinJournalEntryInput = z.infer<typeof createFinJournalEntrySchema>;
